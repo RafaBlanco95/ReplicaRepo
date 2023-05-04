@@ -11,18 +11,23 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Configuration
 public class AppConfig {
 
+    private List<String> corsUrlAllowedOrigins=new ArrayList<>();
+
     @Bean
     public CorsFilter corsFilter() {
+        corsUrlAllowedOrigins.add("http://localhost:8080/*");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
+        config.setAllowedOrigins(corsUrlAllowedOrigins);
         config.addAllowedHeader("*");
         config.addAllowedMethod("OPTIONS");
         config.addAllowedMethod("GET");
