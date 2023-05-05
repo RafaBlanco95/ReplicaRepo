@@ -13,11 +13,24 @@ public class RestConstantsUtils {
     //USERS
     public static final String RESOURCE_USERS = "/users";
 
+    //STUDENTS
+    public static final String RESOURCE_STUDENTS = "/students";
 
+    //TEACHERS
 
+    public static final String RESOURCE_TEACHERS = "/teachers";
 
+    //EMPLOYEES
 
+    public static final String RESOURCE_EMPLOYEES = "/employees";
 
+    //INTERNSHIPS
+
+    public static final String RESOURCE_INTERNSHIPS = "/internships";
+
+    //FINALPROJECTS
+
+    public static final String RESOURCE_FINAL_PROJECTS = "/final_projects";
 
     // ========= ROLE =========
     public static final String RESOURCE_ROLES = "/roles";
