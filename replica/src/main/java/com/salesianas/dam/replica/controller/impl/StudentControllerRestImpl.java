@@ -13,8 +13,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -41,7 +43,7 @@ public class StudentControllerRestImpl implements StudentControllerRest {
 
     @Override
     @PutMapping(value = RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReplicaResponse<StudentRest>> modifyStudent(StudentRest student, Long id) throws ReplicaException {
+    public ResponseEntity<ReplicaResponse<StudentRest>> modifyStudent(@RequestBody StudentRest student, @PathVariable Long id) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
                 .message("Student successfully updated")
@@ -52,17 +54,34 @@ public class StudentControllerRestImpl implements StudentControllerRest {
     }
 
     @Override
-    public ResponseEntity deleteStudent(Long id) throws ReplicaException {
-        return null;
+    @DeleteMapping(value = RestConstantsUtils.RESOURCE_ID)
+    public ResponseEntity deleteStudent(@PathVariable Long id) throws ReplicaException {
+        studentService.deleteStudent(id);
+
+        ReplicaResponse response = ReplicaResponse.builder()
+                .status(ReplicaResponseStatus.OK)
+                .message("Student successfully deleted")
+                .build();
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
 
     @Override
-    public ResponseEntity<ReplicaResponse<StudentRest>> createStudent(StudentRest studentRest) throws ReplicaException {
-        return null;
+    @PostMapping
+    public ResponseEntity<ReplicaResponse<StudentRest>> createStudent(@RequestBody StudentRest studentRest) throws ReplicaException {
+        ReplicaResponse response = ReplicaResponse.builder()
+                .status(ReplicaResponseStatus.OK)
+                .message("Student successfully created")
+                .data(studentService.createStudent(studentRest))
+                .build();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
 
     @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ReplicaResponse<CustomPagedResourceDTO<StudentRest>>> listStudents(@Parameter(hidden=true)Pageable pageable) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)

@@ -35,8 +35,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "Authentication", description ="Authentication rest")
-public class AuthControllerRestImpl {
-    public class AuthControllerImpl implements AuthControllerRest {
+public class AuthControllerRestImpl implements AuthControllerRest{
+
         @Autowired
         AuthenticationManager authenticationManager;
         @Autowired
@@ -110,4 +110,4 @@ public class AuthControllerRestImpl {
             return ResponseEntity.ok(new MessageResponse(RestConstantsUtils.USER_REGISTER_SUCCESS));
         }
     }
-}
+
