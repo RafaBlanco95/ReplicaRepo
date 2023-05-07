@@ -32,6 +32,11 @@ springdoc:
     path: /swagger-ui.html
   pathsToMatch: /v1/**
 
+com:
+  salesianas:
+    replica:
+      jwtSecret: dam2023
+      jwtExpirationMs: 86400000
 
 
 

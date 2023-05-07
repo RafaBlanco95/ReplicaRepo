@@ -29,9 +29,9 @@ import io.jsonwebtoken.UnsupportedJwtException;
 @Component
 public class JwtUtils {
 	private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
-	@Value("${com.everis.d4i.jwtSecret}")
+	@Value("${com.salesianas.replica.jwtSecret}")
 	private String jwtSecret;
-	@Value("${com.everis.d4i.jwtExpirationMs}")
+	@Value("${com.salesianas.replica.jwtExpirationMs}")
 	private int jwtExpirationMs;
 
 	public String generateJwtToken(Authentication authentication) {

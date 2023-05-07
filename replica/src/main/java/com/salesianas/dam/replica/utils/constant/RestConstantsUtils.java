@@ -35,4 +35,14 @@ public class RestConstantsUtils {
     // ========= ROLE =========
     public static final String RESOURCE_ROLES = "/roles";
 
+    public static final String RESOURCE_AUTH = "/auth";
+    public static final String RESOURCE_SIGNIN = "/signin";
+    public static final String RESOURCE_SIGNUP = "/signup";
+    public static final String RESOURCE_DUPLICATE_USER_ERROR="Error: Username ya existente!";
+    public static final String RESOURCE_DUPLICATE_EMAIL_ERROR="Error: Email ya existente!";
+    public static final String RESOURCE_ROLE_NOT_FOUND_ERROR="Error: Role no encontrado.";
+
+    public static final String USER_REGISTER_SUCCESS="Usuario registrado correctamente!";
+
+
 }

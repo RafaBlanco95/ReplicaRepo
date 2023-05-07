@@ -10,6 +10,7 @@ import com.salesianas.dam.replica.persistence.entity.StudentEntity;
 import com.salesianas.dam.replica.persistence.repository.StudentRepository;
 import com.salesianas.dam.replica.service.StudentService;
 import io.swagger.v3.oas.annotations.Parameter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class StudentServiceImpl implements StudentService {
 
+    @Autowired
     private StudentRepository studentRepository;
 
+    @Autowired
     private StudentMapper studentMapper;
 
+    @Autowired
     CustomPagedResourceAssembler<StudentRest> customPagedResourceAssembler;
 
     @Override

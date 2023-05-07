@@ -63,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-				.antMatchers("/api/auth/**").permitAll().antMatchers("/netflix/v1/**").permitAll().antMatchers("/swagger-ui/**").permitAll().antMatchers("/netflix/tvShows/**")
+				.antMatchers("/api/auth/**").permitAll().antMatchers("/replica/v1/**").permitAll().antMatchers("/swagger-ui/**").permitAll().antMatchers("/netflix/tvShows/**")
 				.authenticated();
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
