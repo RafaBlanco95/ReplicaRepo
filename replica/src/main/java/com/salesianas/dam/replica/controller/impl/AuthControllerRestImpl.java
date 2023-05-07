@@ -9,6 +9,9 @@ import javax.validation.Valid;
 
 import com.salesianas.dam.replica.controller.AuthControllerRest;
 import com.salesianas.dam.replica.dto.ERole;
+import com.salesianas.dam.replica.dto.EmployeeRest;
+import com.salesianas.dam.replica.dto.StudentRest;
+import com.salesianas.dam.replica.dto.TeacherRest;
 import com.salesianas.dam.replica.payload.request.LoginRequest;
 import com.salesianas.dam.replica.payload.request.SignupRequest;
 import com.salesianas.dam.replica.payload.response.JwtResponse;
@@ -17,6 +20,9 @@ import com.salesianas.dam.replica.persistence.entity.RoleEntity;
 import com.salesianas.dam.replica.persistence.entity.UserEntity;
 import com.salesianas.dam.replica.persistence.repository.RoleRepository;
 import com.salesianas.dam.replica.persistence.repository.UserRepository;
+import com.salesianas.dam.replica.service.impl.EmployeeServiceImpl;
+import com.salesianas.dam.replica.service.impl.StudentServiceImpl;
+import com.salesianas.dam.replica.service.impl.TeacherServiceImpl;
 import com.salesianas.dam.replica.utils.constant.RestConstantsUtils;
 import com.salesianas.dam.replica.utils.security.jwt.JwtUtils;
 import com.salesianas.dam.replica.utils.security.services.UserDetailsImpl;
@@ -47,6 +53,13 @@ public class AuthControllerRestImpl implements AuthControllerRest{
         PasswordEncoder encoder;
         @Autowired
         JwtUtils jwtUtils;
+
+        @Autowired
+        StudentServiceImpl studentService;
+        @Autowired
+        TeacherServiceImpl teacherService;
+        @Autowired
+        EmployeeServiceImpl employeeService;
 
         @Override
         @PostMapping(value = RestConstantsUtils.API_VERSION_1 + RestConstantsUtils.RESOURCE_SIGNIN)
@@ -102,11 +115,30 @@ public class AuthControllerRestImpl implements AuthControllerRest{
                             RoleEntity studentRole = roleRepository.findByName(ERole.ROLE_STUDENT)
                                     .orElseThrow(() -> new RuntimeException(RestConstantsUtils.RESOURCE_ROLE_NOT_FOUND_ERROR));
                             roles.add(studentRole);
+
+
                     }
                 });
             }
             user.setRoles(roles);
+
             userRepository.save(user);
+            if(roles.contains(roleRepository.findByName(ERole.ROLE_STUDENT)
+                    .orElseThrow(() -> new RuntimeException(RestConstantsUtils.RESOURCE_ROLE_NOT_FOUND_ERROR)))){
+                StudentRest studentRest= new StudentRest();
+                studentRest.setLogin_user(user);
+                studentService.createStudent(studentRest);
+            }else if((roles.contains(roleRepository.findByName(ERole.ROLE_TEACHER)
+                    .orElseThrow(() -> new RuntimeException(RestConstantsUtils.RESOURCE_ROLE_NOT_FOUND_ERROR))))){
+                TeacherRest teacherRest= new TeacherRest();
+                teacherRest.setLogin_user(user);
+               teacherService.createTeacher(teacherRest);
+            }else if((roles.contains(roleRepository.findByName(ERole.ROLE_EMPLOYEE)
+                    .orElseThrow(() -> new RuntimeException(RestConstantsUtils.RESOURCE_ROLE_NOT_FOUND_ERROR))))){
+                EmployeeRest employeeRest= new EmployeeRest();
+                employeeRest.setLogin_user(user);
+                employeeService.createEmployee(employeeRest);
+            }
             return ResponseEntity.ok(new MessageResponse(RestConstantsUtils.USER_REGISTER_SUCCESS));
         }
     }
