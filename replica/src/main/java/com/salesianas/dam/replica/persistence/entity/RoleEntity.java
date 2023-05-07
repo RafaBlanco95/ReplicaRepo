@@ -1,23 +1,25 @@
 package com.salesianas.dam.replica.persistence.entity;
 
 
+import com.salesianas.dam.replica.dto.ERole;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "role")
 @Data
-@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "roles")
 public class RoleEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
-
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private ERole name;
 }
