@@ -1,5 +1,6 @@
 package com.salesianas.dam.replica.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.salesianas.dam.replica.dto.InternshipType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,16 +25,16 @@ public class InternshipEntity {
     @ManyToOne
     private EmployeeEntity employee;
 
-    @Column(name = "starting_date")
+    @Column(name = "startingDate")
     private LocalTime startingDate;
 
-    @Column(name = "ending_date")
+    @Column(name = "endingDate")
     private LocalTime endingDate;
 
     @Column(name = "type")
     private InternshipType type;
 
-    @Column(name = "total_hours")
+    @Column(name = "totalHours")
     private Integer totalHours;
 
 }

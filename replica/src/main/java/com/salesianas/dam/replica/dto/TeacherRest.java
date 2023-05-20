@@ -21,7 +21,7 @@ public class TeacherRest implements Serializable {
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("last_name")
+    @JsonProperty("lastName")
     private String lastName;
 
     @JsonProperty("center")

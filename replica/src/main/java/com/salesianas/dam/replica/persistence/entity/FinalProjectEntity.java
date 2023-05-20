@@ -24,7 +24,7 @@ public class FinalProjectEntity {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "exposition_date")
+    @Column(name = "expositionDate")
     private LocalTime expositionDate;
 
     //@OneToMany

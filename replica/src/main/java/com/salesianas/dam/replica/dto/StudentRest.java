@@ -1,5 +1,6 @@
 package com.salesianas.dam.replica.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.salesianas.dam.replica.persistence.entity.FinalProjectEntity;
 import com.salesianas.dam.replica.persistence.entity.InternshipEntity;
@@ -17,13 +18,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StudentRest implements Serializable {
-    @JsonProperty("id")
-    private Long id;
 
     @JsonProperty("name")
     private String name;
 
-    @JsonProperty("last_name")
+    @JsonProperty("lastName")
     private String lastName;
 
     @JsonProperty("login_user")

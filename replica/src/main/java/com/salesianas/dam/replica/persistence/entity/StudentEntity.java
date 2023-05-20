@@ -1,5 +1,6 @@
 package com.salesianas.dam.replica.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -22,13 +23,14 @@ public class StudentEntity {
     @Column(name = "last_name")
     private String lastName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private UserEntity login_user;
 
     @ManyToOne
     private TeacherEntity teacher;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<InternshipEntity> internships;
 
     @OneToOne

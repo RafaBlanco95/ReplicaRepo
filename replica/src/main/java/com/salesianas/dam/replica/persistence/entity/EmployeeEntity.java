@@ -22,9 +22,9 @@ public class EmployeeEntity {
     @Column(name = "last_name")
     private String lastName;
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<InternshipEntity> internships;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private UserEntity login_user;
 }

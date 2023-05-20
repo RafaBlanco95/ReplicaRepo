@@ -114,13 +114,8 @@ public class HandlerException {
                 .body(response);
     }
 
-    /**
-     * All exceptions that we do not control
-     * @param req
-     * @param ex
-     * @return
-     */
-    @ExceptionHandler({Exception.class})
+
+   /* @ExceptionHandler({Exception.class})
     public ResponseEntity<ReplicaResponse> unhandledErrors(final HttpServletRequest req, final Exception ex) {
         logException(ex);
 
@@ -140,7 +135,7 @@ public class HandlerException {
                 .internalServerError()
                 .body(response);
     }
-
+*/
     private void logException(final Exception exception) {
         log.error(ExceptionUtils.getStackTrace(exception));
     }

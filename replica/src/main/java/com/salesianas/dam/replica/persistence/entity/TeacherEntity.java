@@ -26,10 +26,10 @@ public class TeacherEntity {
     @Column(name = "center")
     private String center;
 
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<StudentEntity> students;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private UserEntity login_user;
 
 
