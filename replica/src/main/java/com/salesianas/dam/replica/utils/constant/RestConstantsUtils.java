@@ -12,6 +12,8 @@ public class RestConstantsUtils {
 
     public static final String RESOURCE_USERNAME = "/{username}";
 
+    public static final String RESOURCE_USERNAMES = "/username";
+
     //USERS
     public static final String RESOURCE_USERS = "/users";
 

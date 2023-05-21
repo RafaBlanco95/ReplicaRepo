@@ -42,7 +42,8 @@ public class UserControllerRestImpl implements UserControllerRest {
     }
 
     @Override
-    @GetMapping(value = RestConstantsUtils.RESOURCE_USERNAME, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping(value = RestConstantsUtils.RESOURCE_USERNAMES+ RestConstantsUtils.RESOURCE_USERNAME, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ReplicaResponse<UserRest>> userDetailsByUsername(@PathVariable String username) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
