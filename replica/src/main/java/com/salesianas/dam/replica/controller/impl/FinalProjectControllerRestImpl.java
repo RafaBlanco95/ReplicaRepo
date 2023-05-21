@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 @Tag(name = "FinalProject", description = "FinalProject rest")
 @RequestMapping(value = RestConstantsUtils.API_VERSION_1 + RestConstantsUtils.RESOURCE_FINAL_PROJECTS)
 public class FinalProjectControllerRestImpl implements FinalProjectControllerRest {

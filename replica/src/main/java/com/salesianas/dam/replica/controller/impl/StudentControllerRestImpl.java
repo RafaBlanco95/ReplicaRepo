@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 @Tag(name = "Student", description ="Student rest")
 @RequestMapping(value = RestConstantsUtils.API_VERSION_1 + RestConstantsUtils.RESOURCE_STUDENTS, produces = MediaType.APPLICATION_JSON_VALUE)
 public class StudentControllerRestImpl implements StudentControllerRest {

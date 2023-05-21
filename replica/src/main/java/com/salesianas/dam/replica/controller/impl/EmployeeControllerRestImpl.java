@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 @Tag(name = "Employee", description = "Employee rest")
 @RequestMapping(value = RestConstantsUtils.API_VERSION_1 + RestConstantsUtils.RESOURCE_EMPLOYEES)
 public class EmployeeControllerRestImpl implements EmployeeControllerRest {
