@@ -56,8 +56,8 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public void deleteTeacher(Long id) throws ReplicaException {
-        TeacherEntity studentEntity= teacherRepository.findById(id).orElseThrow( ()->new ReplicaNotFoundException(String.format("Teacher with ID: [%s] not found.", id), "404"));
-        teacherRepository.delete(studentEntity);
+        TeacherEntity teacherEntity= teacherRepository.findById(id).orElseThrow( ()->new ReplicaNotFoundException(String.format("Teacher with ID: [%s] not found.", id), "404"));
+        teacherRepository.delete(teacherEntity);
     }
 
     @Override

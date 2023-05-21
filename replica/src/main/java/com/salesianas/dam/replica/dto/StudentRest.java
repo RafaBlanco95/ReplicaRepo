@@ -18,6 +18,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StudentRest implements Serializable {
+    @JsonProperty("id")
+    private Long id;
+    @JsonProperty("username")
+    private String username;
 
     @JsonProperty("name")
     private String name;

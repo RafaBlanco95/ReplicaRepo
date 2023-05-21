@@ -37,7 +37,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "Authentication", description ="Authentication rest")
@@ -127,16 +127,19 @@ public class AuthControllerRestImpl implements AuthControllerRest{
                     .orElseThrow(() -> new RuntimeException(RestConstantsUtils.RESOURCE_ROLE_NOT_FOUND_ERROR)))){
                 StudentRest studentRest= new StudentRest();
                 studentRest.setLogin_user(user);
+                studentRest.setUsername(user.getUsername());
                 studentService.createStudent(studentRest);
             }else if((roles.contains(roleRepository.findByName(ERole.ROLE_TEACHER)
                     .orElseThrow(() -> new RuntimeException(RestConstantsUtils.RESOURCE_ROLE_NOT_FOUND_ERROR))))){
                 TeacherRest teacherRest= new TeacherRest();
                 teacherRest.setLogin_user(user);
+                teacherRest.setUsername(user.getUsername());
                teacherService.createTeacher(teacherRest);
             }else if((roles.contains(roleRepository.findByName(ERole.ROLE_EMPLOYEE)
                     .orElseThrow(() -> new RuntimeException(RestConstantsUtils.RESOURCE_ROLE_NOT_FOUND_ERROR))))){
                 EmployeeRest employeeRest= new EmployeeRest();
                 employeeRest.setLogin_user(user);
+                employeeRest.setUsername(user.getUsername());
                 employeeService.createEmployee(employeeRest);
             }
             return ResponseEntity.ok(new MessageResponse(RestConstantsUtils.USER_REGISTER_SUCCESS));

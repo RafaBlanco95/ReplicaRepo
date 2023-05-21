@@ -10,6 +10,8 @@ public class RestConstantsUtils {
 
     public static final String RESOURCE_ID = "/{id}";
 
+    public static final String RESOURCE_USERNAME = "/{username}";
+
     //USERS
     public static final String RESOURCE_USERS = "/users";
 

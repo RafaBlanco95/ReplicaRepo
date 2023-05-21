@@ -20,6 +20,9 @@ public class StudentEntity {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "username")
+    private String username;
+
     @Column(name = "last_name")
     private String lastName;
 

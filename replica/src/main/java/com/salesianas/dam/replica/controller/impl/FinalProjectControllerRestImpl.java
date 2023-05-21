@@ -29,7 +29,7 @@ public class FinalProjectControllerRestImpl implements FinalProjectControllerRes
     private FinalProjectServiceImpl finalProjectService;
     @Override
     @GetMapping(value = RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReplicaResponse<FinalProjectRest>> finalProjectDetails(Long id) throws ReplicaException {
+    public ResponseEntity<ReplicaResponse<FinalProjectRest>> finalProjectDetails( @PathVariable Long id) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
                 .message("FinalProject successfully recovered")
@@ -41,7 +41,7 @@ public class FinalProjectControllerRestImpl implements FinalProjectControllerRes
 
     @Override
     @PutMapping(value = RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReplicaResponse<FinalProjectRest>> modifyFinalProject(FinalProjectRest finalProject, Long id) throws ReplicaException {
+    public ResponseEntity<ReplicaResponse<FinalProjectRest>> modifyFinalProject(@RequestBody FinalProjectRest finalProject, @PathVariable Long id) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
                 .message("FinalProject successfully updated")
@@ -53,7 +53,7 @@ public class FinalProjectControllerRestImpl implements FinalProjectControllerRes
 
     @Override
     @DeleteMapping(value = RestConstantsUtils.RESOURCE_ID)
-    public ResponseEntity deleteFinalProject(Long id) throws ReplicaException {
+    public ResponseEntity deleteFinalProject(@PathVariable Long id) throws ReplicaException {
         finalProjectService.deleteFinalProject(id);
 
         ReplicaResponse response = ReplicaResponse.builder()
@@ -66,7 +66,7 @@ public class FinalProjectControllerRestImpl implements FinalProjectControllerRes
 
     @Override
     @PostMapping
-    public ResponseEntity<ReplicaResponse<FinalProjectRest>> createFinalProject(FinalProjectRest finalProjectRest) throws ReplicaException {
+    public ResponseEntity<ReplicaResponse<FinalProjectRest>> createFinalProject(@RequestBody FinalProjectRest finalProjectRest) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
                 .message("FinalProject successfully created")

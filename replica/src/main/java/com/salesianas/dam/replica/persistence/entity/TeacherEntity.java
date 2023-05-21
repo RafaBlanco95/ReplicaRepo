@@ -17,6 +17,9 @@ public class TeacherEntity {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "username")
+    private String username;
+
     @Column(name = "name")
     private String name;
 

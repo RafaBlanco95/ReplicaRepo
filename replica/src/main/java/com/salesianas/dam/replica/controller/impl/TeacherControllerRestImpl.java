@@ -32,7 +32,7 @@ public class TeacherControllerRestImpl implements TeacherControllerRest {
     private TeacherServiceImpl teacherService;
     @Override
     @GetMapping(value = RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReplicaResponse<TeacherRest>> teacherDetails(Long id) throws ReplicaException {
+    public ResponseEntity<ReplicaResponse<TeacherRest>> teacherDetails(@PathVariable Long id) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
                 .message("Teacher successfully recovered")
@@ -44,7 +44,7 @@ public class TeacherControllerRestImpl implements TeacherControllerRest {
 
     @Override
     @PutMapping(value = RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReplicaResponse<TeacherRest>> modifyTeacher(TeacherRest teacher, Long id) throws ReplicaException {
+    public ResponseEntity<ReplicaResponse<TeacherRest>> modifyTeacher(@RequestBody TeacherRest teacher, @PathVariable Long id) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
                 .message("Teacher successfully updated")
@@ -56,7 +56,7 @@ public class TeacherControllerRestImpl implements TeacherControllerRest {
 
     @Override
     @DeleteMapping(value = RestConstantsUtils.RESOURCE_ID)
-    public ResponseEntity deleteTeacher(Long id) throws ReplicaException {
+    public ResponseEntity deleteTeacher(@PathVariable Long id) throws ReplicaException {
         teacherService.deleteTeacher(id);
 
         ReplicaResponse response = ReplicaResponse.builder()
@@ -69,7 +69,7 @@ public class TeacherControllerRestImpl implements TeacherControllerRest {
 
     @Override
     @PostMapping
-    public ResponseEntity<ReplicaResponse<TeacherRest>> createTeacher(TeacherRest teacherRest) throws ReplicaException {
+    public ResponseEntity<ReplicaResponse<TeacherRest>> createTeacher(@RequestBody TeacherRest teacherRest) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
                 .message("Teacher successfully created")

@@ -21,6 +21,9 @@ public class EmployeeRest implements Serializable {
     @JsonProperty("id")
     private Long id;
 
+    @JsonProperty("username")
+    private String username;
+
     @JsonProperty("name")
     private String name;
 

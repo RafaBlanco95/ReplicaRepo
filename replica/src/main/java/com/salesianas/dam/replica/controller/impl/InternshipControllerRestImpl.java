@@ -30,7 +30,7 @@ public class InternshipControllerRestImpl implements InternshipControllerRest {
     private InternshipServiceImpl internshipService;
     @Override
     @GetMapping(value = RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReplicaResponse<InternshipRest>> internshipDetails(Long id) throws ReplicaException {
+    public ResponseEntity<ReplicaResponse<InternshipRest>> internshipDetails(@PathVariable Long id) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
                 .message("Internship successfully recovered")
@@ -42,7 +42,7 @@ public class InternshipControllerRestImpl implements InternshipControllerRest {
 
     @Override
     @PutMapping(value = RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReplicaResponse<InternshipRest>> modifyInternship(InternshipRest internship, Long id) throws ReplicaException {
+    public ResponseEntity<ReplicaResponse<InternshipRest>> modifyInternship(@RequestBody InternshipRest internship, @PathVariable Long id) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
                 .message("Internship successfully updated")
@@ -54,7 +54,7 @@ public class InternshipControllerRestImpl implements InternshipControllerRest {
 
     @Override
     @DeleteMapping(value = RestConstantsUtils.RESOURCE_ID)
-    public ResponseEntity deleteInternship(Long id) throws ReplicaException {
+    public ResponseEntity deleteInternship(@PathVariable Long id) throws ReplicaException {
         internshipService.deleteInternship(id);
 
         ReplicaResponse response = ReplicaResponse.builder()
@@ -67,7 +67,7 @@ public class InternshipControllerRestImpl implements InternshipControllerRest {
 
     @Override
     @PostMapping
-    public ResponseEntity<ReplicaResponse<InternshipRest>> createInternship(InternshipRest internshipRest) throws ReplicaException {
+    public ResponseEntity<ReplicaResponse<InternshipRest>> createInternship(@RequestBody InternshipRest internshipRest) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
                 .message("Internship successfully created")

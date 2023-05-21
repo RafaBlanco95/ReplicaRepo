@@ -32,7 +32,7 @@ public class EmployeeControllerRestImpl implements EmployeeControllerRest {
     private EmployeeServiceImpl employeeService;
     @Override
     @GetMapping(value = RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReplicaResponse<EmployeeRest>> employeeDetails(Long id) throws ReplicaException {
+    public ResponseEntity<ReplicaResponse<EmployeeRest>> employeeDetails(@PathVariable Long id) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
                 .message("Employee successfully recovered")
@@ -44,7 +44,7 @@ public class EmployeeControllerRestImpl implements EmployeeControllerRest {
 
     @Override
     @PutMapping(value = RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReplicaResponse<EmployeeRest>> modifyEmployee(EmployeeRest employee, Long id) throws ReplicaException {
+    public ResponseEntity<ReplicaResponse<EmployeeRest>> modifyEmployee(@RequestBody EmployeeRest employee, @PathVariable Long id) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
                 .message("Employee successfully updated")
@@ -56,7 +56,7 @@ public class EmployeeControllerRestImpl implements EmployeeControllerRest {
 
     @Override
     @DeleteMapping(value = RestConstantsUtils.RESOURCE_ID)
-    public ResponseEntity deleteEmployee(Long id) throws ReplicaException {
+    public ResponseEntity deleteEmployee(@PathVariable Long id) throws ReplicaException {
         employeeService.deleteEmployee(id);
 
         ReplicaResponse response = ReplicaResponse.builder()
@@ -69,7 +69,7 @@ public class EmployeeControllerRestImpl implements EmployeeControllerRest {
 
     @Override
     @PostMapping
-    public ResponseEntity<ReplicaResponse<EmployeeRest>> createEmployee(EmployeeRest employeeRest) throws ReplicaException {
+    public ResponseEntity<ReplicaResponse<EmployeeRest>> createEmployee(@RequestBody EmployeeRest employeeRest) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
                 .message("Employee successfully created")
