@@ -43,6 +43,19 @@ public class EmployeeControllerRestImpl implements EmployeeControllerRest {
     }
 
     @Override
+    @GetMapping(value = RestConstantsUtils.RESOURCE_USERNAMES+RestConstantsUtils.RESOURCE_USERNAME, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
+    public ResponseEntity<ReplicaResponse<EmployeeRest>> employeeDetailsByUsername(@PathVariable String  username) throws ReplicaException {
+        ReplicaResponse response = ReplicaResponse.builder()
+                .status(ReplicaResponseStatus.OK)
+                .message("Employee successfully recovered")
+                .data(employeeService.getEmployeeByUsername(username))
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
     @PutMapping(value = RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ReplicaResponse<EmployeeRest>> modifyEmployee(@RequestBody EmployeeRest employee, @PathVariable Long id) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()

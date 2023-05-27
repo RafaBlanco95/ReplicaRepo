@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 public interface EmployeeControllerRest {
     ResponseEntity<ReplicaResponse<EmployeeRest>> employeeDetails(Long id) throws ReplicaException;
 
+    ResponseEntity<ReplicaResponse<EmployeeRest>> employeeDetailsByUsername(String username) throws ReplicaException;
+
     ResponseEntity<ReplicaResponse<EmployeeRest>>  modifyEmployee(EmployeeRest employee, Long id) throws ReplicaException;
 
     ResponseEntity deleteEmployee(Long id) throws ReplicaException;

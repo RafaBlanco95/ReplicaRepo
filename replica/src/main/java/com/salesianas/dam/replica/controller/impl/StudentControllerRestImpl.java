@@ -4,6 +4,7 @@ import com.salesianas.dam.replica.controller.StudentControllerRest;
 import com.salesianas.dam.replica.dto.CustomPagedResourceDTO;
 import com.salesianas.dam.replica.dto.StudentRest;
 import com.salesianas.dam.replica.exception.ReplicaException;
+import com.salesianas.dam.replica.payload.request.StudentEditRequest;
 import com.salesianas.dam.replica.response.ReplicaResponse;
 import com.salesianas.dam.replica.response.ReplicaResponseStatus;
 import com.salesianas.dam.replica.service.impl.StudentServiceImpl;
@@ -42,6 +43,18 @@ public class StudentControllerRestImpl implements StudentControllerRest {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping(value = RestConstantsUtils.RESOURCE_USERNAMES+RestConstantsUtils.RESOURCE_USERNAME, produces = MediaType.APPLICATION_JSON_VALUE)
+    //@PreAuthorize("hasRole('ADMIN') or hasRole('STUDENT')")
+    public ResponseEntity<ReplicaResponse<StudentRest>> studentDetailsByUsername(@PathVariable String username) throws ReplicaException {
+        ReplicaResponse response = ReplicaResponse.builder()
+                .status(ReplicaResponseStatus.OK)
+                .message("Student successfully recovered")
+                .data(studentService.getStudentByUsername(username))
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
+
     @Override
     @PutMapping(value = RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ReplicaResponse<StudentRest>> modifyStudent(@RequestBody StudentRest student, @PathVariable Long id) throws ReplicaException {
@@ -49,6 +62,18 @@ public class StudentControllerRestImpl implements StudentControllerRest {
                 .status(ReplicaResponseStatus.OK)
                 .message("Student successfully updated")
                 .data(studentService.modifyStudent(student, id))
+                .build();
+
+        return ResponseEntity.accepted().body(response);
+    }
+
+    @Override
+    @PatchMapping(value = RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ReplicaResponse<StudentRest>> editStudent(@RequestBody StudentEditRequest student, @PathVariable Long id) throws ReplicaException {
+        ReplicaResponse response = ReplicaResponse.builder()
+                .status(ReplicaResponseStatus.OK)
+                .message("Student successfully updated")
+                .data(studentService.editStudent(student, id))
                 .build();
 
         return ResponseEntity.accepted().body(response);

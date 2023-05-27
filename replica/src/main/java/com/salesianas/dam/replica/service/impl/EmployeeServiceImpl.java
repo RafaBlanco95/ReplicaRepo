@@ -37,6 +37,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public EmployeeRest getEmployeeByUsername(String username) throws ReplicaException {
+        return employeeRepository.findByUsername(username)
+                .map(employee -> employeeMapper.employeeEntityToEmployeeRest(employee)).orElseThrow( ()->new ReplicaNotFoundException(String.format("Employee with Username: [%s] not found.", username), "404"));
+
+    }
+
+    @Override
     public CustomPagedResourceDTO<EmployeeRest> listEmployees(Pageable pageable) throws ReplicaException {
         Page<EmployeeEntity> employeePage = employeeRepository.findAll(pageable);
         Page<EmployeeRest> employeeRestPage = employeePage.map(employeeMapper::employeeEntityToEmployeeRest);

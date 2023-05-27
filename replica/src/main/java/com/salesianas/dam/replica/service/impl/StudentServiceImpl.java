@@ -6,6 +6,7 @@ import com.salesianas.dam.replica.dto.StudentRest;
 import com.salesianas.dam.replica.exception.ReplicaException;
 import com.salesianas.dam.replica.exception.ReplicaNotFoundException;
 import com.salesianas.dam.replica.mapper.StudentMapper;
+import com.salesianas.dam.replica.payload.request.StudentEditRequest;
 import com.salesianas.dam.replica.persistence.entity.StudentEntity;
 import com.salesianas.dam.replica.persistence.repository.StudentRepository;
 import com.salesianas.dam.replica.service.StudentService;
@@ -35,6 +36,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public StudentRest getStudentByUsername(String username) throws ReplicaException {
+        return studentRepository.findByUsername(username)
+                .map(student -> studentMapper.studentEntityToStudentRest(student)).orElseThrow( ()->new ReplicaNotFoundException(String.format("Student with Username: [%s] not found.", username), "404"));
+
+    }
+
+    @Override
     public CustomPagedResourceDTO<StudentRest> listStudents(@Parameter(hidden=true)Pageable pageable) throws ReplicaException {
         Page<StudentEntity> studentPage = studentRepository.findAll(pageable);
         Page<StudentRest> studentRestPage = studentPage.map(studentMapper::studentEntityToStudentRest);
@@ -50,6 +58,14 @@ public class StudentServiceImpl implements StudentService {
                     return studentRepository.save(studentSaved);
                 }).orElseThrow(() -> new ReplicaNotFoundException(String.format("Student with ID: [%s] not found.", id), "404"))
         );
+    }
+
+    @Override
+    public StudentRest editStudent(StudentEditRequest student, Long id) throws ReplicaException {
+        StudentEntity studentEntity= studentRepository.findById(id).orElseThrow(() -> new ReplicaNotFoundException(String.format("Student with ID: [%s] not found.", id), "404"));
+        studentEntity.setUsername(student.getUsername());
+        StudentEntity studentSaved=studentRepository.save(studentEntity);
+        return studentMapper.studentEntityToStudentRest(studentSaved);
     }
 
     @Override

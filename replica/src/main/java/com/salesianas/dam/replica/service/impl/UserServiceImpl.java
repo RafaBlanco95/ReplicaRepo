@@ -16,6 +16,7 @@ import com.salesianas.dam.replica.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,6 +24,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    PasswordEncoder encoder;
 
     @Autowired
     private UserMapper userMapper;
@@ -51,8 +55,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserRest modifyUser(UserRest user, Long id) throws ReplicaException {
+
         return userMapper.userEntityToUserRest(userRepository.findById(id).map(userSaved -> {
                     userSaved = userMapper.userRestToUserEntity(user);
+                    userSaved.setPassword(encoder.encode(user.getPassword()));
                     userSaved.setId(id);
                     return userRepository.save(userSaved);
                 }).orElseThrow(() -> new ReplicaNotFoundException(String.format("User with ID: [%s] not found.", id), "404"))

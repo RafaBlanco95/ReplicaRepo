@@ -43,6 +43,19 @@ public class TeacherControllerRestImpl implements TeacherControllerRest {
     }
 
     @Override
+    @GetMapping(value = RestConstantsUtils.RESOURCE_USERNAMES+RestConstantsUtils.RESOURCE_USERNAME, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER')")
+    public ResponseEntity<ReplicaResponse<TeacherRest>> teacherDetailsByUsername(@PathVariable String username) throws ReplicaException {
+        ReplicaResponse response = ReplicaResponse.builder()
+                .status(ReplicaResponseStatus.OK)
+                .message("Teacher successfully recovered")
+                .data(teacherService.getTeacherByUsername(username))
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
     @PutMapping(value = RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ReplicaResponse<TeacherRest>> modifyTeacher(@RequestBody TeacherRest teacher, @PathVariable Long id) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()

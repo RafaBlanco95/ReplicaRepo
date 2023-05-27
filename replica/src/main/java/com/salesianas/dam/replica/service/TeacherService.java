@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 public interface TeacherService {
     TeacherRest getTeacher(Long id) throws ReplicaException;
 
+    TeacherRest getTeacherByUsername(String username) throws ReplicaException;
+
     CustomPagedResourceDTO<TeacherRest> listTeachers(Pageable pageable) throws ReplicaException;
 
     TeacherRest modifyTeacher(TeacherRest teacher, Long id) throws ReplicaException;

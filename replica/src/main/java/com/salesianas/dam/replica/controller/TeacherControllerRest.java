@@ -12,6 +12,8 @@ public interface TeacherControllerRest {
 
     ResponseEntity<ReplicaResponse<TeacherRest>> teacherDetails(Long id) throws ReplicaException;
 
+    ResponseEntity<ReplicaResponse<TeacherRest>> teacherDetailsByUsername(String username) throws ReplicaException;
+
     ResponseEntity<ReplicaResponse<TeacherRest>>  modifyTeacher(TeacherRest teacher, Long id) throws ReplicaException;
 
     ResponseEntity deleteTeacher(Long id) throws ReplicaException;

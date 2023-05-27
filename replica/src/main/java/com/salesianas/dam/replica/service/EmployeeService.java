@@ -10,6 +10,8 @@ public interface EmployeeService {
 
     EmployeeRest getEmployee(Long id) throws ReplicaException;
 
+    EmployeeRest getEmployeeByUsername(String username) throws ReplicaException;
+
     CustomPagedResourceDTO<EmployeeRest> listEmployees(Pageable pageable) throws ReplicaException;
 
     EmployeeRest modifyEmployee(EmployeeRest employeeRest, Long id) throws ReplicaException;

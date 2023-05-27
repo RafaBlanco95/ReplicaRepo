@@ -38,6 +38,13 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public TeacherRest getTeacherByUsername(String username) throws ReplicaException {
+        return teacherRepository.findByUsername(username)
+                .map(teacher -> teacherMapper.teacherEntityToTeacherRest(teacher)).orElseThrow( ()->new ReplicaNotFoundException(String.format("Teacher with Username: [%s] not found.", username), "404"));
+
+    }
+
+    @Override
     public CustomPagedResourceDTO<TeacherRest> listTeachers(@Parameter(hidden=true)Pageable pageable) throws ReplicaException {
         Page<TeacherEntity> teacherPage = teacherRepository.findAll(pageable);
         Page<TeacherRest> teacherRestPage = teacherPage.map(teacherMapper::teacherEntityToTeacherRest);
