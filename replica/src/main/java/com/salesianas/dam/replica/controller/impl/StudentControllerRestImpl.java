@@ -4,7 +4,7 @@ import com.salesianas.dam.replica.controller.StudentControllerRest;
 import com.salesianas.dam.replica.dto.CustomPagedResourceDTO;
 import com.salesianas.dam.replica.dto.StudentRest;
 import com.salesianas.dam.replica.exception.ReplicaException;
-import com.salesianas.dam.replica.payload.request.StudentEditRequest;
+import com.salesianas.dam.replica.payload.request.EditRequest;
 import com.salesianas.dam.replica.response.ReplicaResponse;
 import com.salesianas.dam.replica.response.ReplicaResponseStatus;
 import com.salesianas.dam.replica.service.impl.StudentServiceImpl;
@@ -43,6 +43,7 @@ public class StudentControllerRestImpl implements StudentControllerRest {
         return ResponseEntity.ok(response);
     }
 
+    @Override
     @GetMapping(value = RestConstantsUtils.RESOURCE_USERNAMES+RestConstantsUtils.RESOURCE_USERNAME, produces = MediaType.APPLICATION_JSON_VALUE)
     //@PreAuthorize("hasRole('ADMIN') or hasRole('STUDENT')")
     public ResponseEntity<ReplicaResponse<StudentRest>> studentDetailsByUsername(@PathVariable String username) throws ReplicaException {
@@ -69,7 +70,7 @@ public class StudentControllerRestImpl implements StudentControllerRest {
 
     @Override
     @PatchMapping(value = RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReplicaResponse<StudentRest>> editStudent(@RequestBody StudentEditRequest student, @PathVariable Long id) throws ReplicaException {
+    public ResponseEntity<ReplicaResponse<StudentRest>> editStudent(@RequestBody EditRequest student, @PathVariable Long id) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
                 .message("Student successfully updated")

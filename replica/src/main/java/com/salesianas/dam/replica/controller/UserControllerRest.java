@@ -17,6 +17,8 @@ public interface UserControllerRest {
 
     ResponseEntity deleteUser(Long id) throws ReplicaException;
 
+    ResponseEntity deleteUserByUsername(String username) throws ReplicaException;
+
     ResponseEntity<ReplicaResponse<UserRest>>  createUser(UserRest userRest) throws ReplicaException;
 
     ResponseEntity<ReplicaResponse<CustomPagedResourceDTO<UserRest>>> listUsers(

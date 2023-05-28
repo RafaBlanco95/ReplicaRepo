@@ -1,9 +1,11 @@
 package com.salesianas.dam.replica.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 
@@ -18,6 +20,7 @@ public class FinalProjectEntity {
     @Column(name = "id")
     private Long id;
 
+    @JsonIgnore
     @OneToOne
     private StudentEntity student;
 
@@ -25,7 +28,7 @@ public class FinalProjectEntity {
     private String title;
 
     @Column(name = "expositionDate")
-    private LocalTime expositionDate;
+    private LocalDate expositionDate;
 
     //@OneToMany
     //private List<String> progress;

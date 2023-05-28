@@ -3,7 +3,7 @@ package com.salesianas.dam.replica.service;
 import com.salesianas.dam.replica.dto.CustomPagedResourceDTO;
 import com.salesianas.dam.replica.dto.StudentRest;
 import com.salesianas.dam.replica.exception.ReplicaException;
-import com.salesianas.dam.replica.payload.request.StudentEditRequest;
+import com.salesianas.dam.replica.payload.request.EditRequest;
 import org.springframework.data.domain.Pageable;
 
 public interface StudentService {
@@ -16,7 +16,7 @@ public interface StudentService {
 
     StudentRest modifyStudent(StudentRest student, Long id) throws ReplicaException;
 
-    StudentRest editStudent(StudentEditRequest student, Long id) throws ReplicaException;
+    StudentRest editStudent(EditRequest student, Long id) throws ReplicaException;
 
     void deleteStudent(Long id) throws ReplicaException;
 

@@ -26,13 +26,15 @@ public class StudentEntity {
     @Column(name = "last_name")
     private String lastName;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     private UserEntity login_user;
 
+    @JsonIgnore
     @ManyToOne
     private TeacherEntity teacher;
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<InternshipEntity> internships;
 

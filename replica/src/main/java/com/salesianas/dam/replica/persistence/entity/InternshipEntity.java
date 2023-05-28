@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
@@ -19,22 +20,26 @@ public class InternshipEntity {
     @Column(name = "id")
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
     private StudentEntity student;
-
+    @JsonIgnore
     @ManyToOne
     private EmployeeEntity employee;
 
     @Column(name = "startingDate")
-    private LocalTime startingDate;
+    private LocalDate startingDate;
 
     @Column(name = "endingDate")
-    private LocalTime endingDate;
+    private LocalDate endingDate;
 
     @Column(name = "type")
     private InternshipType type;
 
     @Column(name = "totalHours")
     private Integer totalHours;
+
+    @Column(name= "enterprise")
+    private String enterprise;
 
 }

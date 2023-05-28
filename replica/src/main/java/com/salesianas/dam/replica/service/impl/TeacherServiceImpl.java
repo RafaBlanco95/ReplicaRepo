@@ -8,6 +8,7 @@ import com.salesianas.dam.replica.exception.ReplicaException;
 import com.salesianas.dam.replica.exception.ReplicaNotFoundException;
 import com.salesianas.dam.replica.mapper.StudentMapper;
 import com.salesianas.dam.replica.mapper.TeacherMapper;
+import com.salesianas.dam.replica.payload.request.EditRequest;
 import com.salesianas.dam.replica.persistence.entity.StudentEntity;
 import com.salesianas.dam.replica.persistence.entity.TeacherEntity;
 import com.salesianas.dam.replica.persistence.repository.StudentRepository;
@@ -59,6 +60,14 @@ public class TeacherServiceImpl implements TeacherService {
                     return teacherRepository.save(teacherSaved);
                 }).orElseThrow(() -> new ReplicaNotFoundException(String.format("Teacher with ID: [%s] not found.", id), "404"))
         );
+    }
+
+    @Override
+    public TeacherRest editTeacher(EditRequest teacher, Long id) throws ReplicaException {
+        TeacherEntity teacherEntity= teacherRepository.findById(id).orElseThrow(() -> new ReplicaNotFoundException(String.format("Teacher with ID: [%s] not found.", id), "404"));
+        teacherEntity.setUsername(teacher.getUsername());
+        TeacherEntity studentSaved=teacherRepository.save(teacherEntity);
+        return teacherMapper.teacherEntityToTeacherRest(studentSaved);
     }
 
     @Override

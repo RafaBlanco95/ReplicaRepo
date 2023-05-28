@@ -72,6 +72,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void deleteUserByUsername(String username) throws ReplicaException {
+        UserEntity userEntity= userRepository.findByUsername(username).orElseThrow( ()->new ReplicaNotFoundException(String.format("User with Username: [%s] not found.", username), "404"));
+        userRepository.delete(userEntity);
+    }
+
+    @Override
     public UserRest createUser(UserRest userRest) throws ReplicaException {
         return userMapper.userEntityToUserRest(userRepository.save(userMapper.userRestToUserEntity(userRest)));
     }

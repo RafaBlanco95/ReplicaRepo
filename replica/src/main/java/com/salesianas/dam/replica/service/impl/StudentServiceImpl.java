@@ -6,7 +6,7 @@ import com.salesianas.dam.replica.dto.StudentRest;
 import com.salesianas.dam.replica.exception.ReplicaException;
 import com.salesianas.dam.replica.exception.ReplicaNotFoundException;
 import com.salesianas.dam.replica.mapper.StudentMapper;
-import com.salesianas.dam.replica.payload.request.StudentEditRequest;
+import com.salesianas.dam.replica.payload.request.EditRequest;
 import com.salesianas.dam.replica.persistence.entity.StudentEntity;
 import com.salesianas.dam.replica.persistence.repository.StudentRepository;
 import com.salesianas.dam.replica.service.StudentService;
@@ -61,7 +61,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentRest editStudent(StudentEditRequest student, Long id) throws ReplicaException {
+    public StudentRest editStudent(EditRequest student, Long id) throws ReplicaException {
         StudentEntity studentEntity= studentRepository.findById(id).orElseThrow(() -> new ReplicaNotFoundException(String.format("Student with ID: [%s] not found.", id), "404"));
         studentEntity.setUsername(student.getUsername());
         StudentEntity studentSaved=studentRepository.save(studentEntity);

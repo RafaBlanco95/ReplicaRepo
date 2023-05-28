@@ -8,6 +8,7 @@ import com.salesianas.dam.replica.exception.ReplicaException;
 import com.salesianas.dam.replica.exception.ReplicaNotFoundException;
 import com.salesianas.dam.replica.mapper.EmployeeMapper;
 import com.salesianas.dam.replica.mapper.StudentMapper;
+import com.salesianas.dam.replica.payload.request.EditRequest;
 import com.salesianas.dam.replica.persistence.entity.EmployeeEntity;
 import com.salesianas.dam.replica.persistence.entity.StudentEntity;
 import com.salesianas.dam.replica.persistence.repository.EmployeeRepository;
@@ -58,6 +59,14 @@ public class EmployeeServiceImpl implements EmployeeService {
                     return employeeRepository.save(employeeSaved);
                 }).orElseThrow(() -> new ReplicaNotFoundException(String.format("Employee with ID: [%s] not found.", id), "404"))
         );
+    }
+
+    @Override
+    public EmployeeRest editEmployee(EditRequest employee, Long id) throws ReplicaException {
+        EmployeeEntity employeeEntity= employeeRepository.findById(id).orElseThrow(() -> new ReplicaNotFoundException(String.format("Employee with ID: [%s] not found.", id), "404"));
+        employeeEntity.setUsername(employee.getUsername());
+        EmployeeEntity employeeSaved=employeeRepository.save(employeeEntity);
+        return employeeMapper.employeeEntityToEmployeeRest(employeeSaved);
     }
 
     @Override

@@ -18,5 +18,7 @@ public interface UserService {
 
     void deleteUser(Long id) throws ReplicaException;
 
+    void deleteUserByUsername(String username) throws ReplicaException;
+
     UserRest createUser(UserRest userRest) throws ReplicaException;
 }

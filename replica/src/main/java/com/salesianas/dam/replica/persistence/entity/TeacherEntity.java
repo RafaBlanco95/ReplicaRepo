@@ -33,6 +33,7 @@ public class TeacherEntity {
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<StudentEntity> students;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     private UserEntity login_user;
 

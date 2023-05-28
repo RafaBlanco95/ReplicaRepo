@@ -42,7 +42,7 @@ public class UserControllerRestImpl implements UserControllerRest {
     }
 
     @Override
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = RestConstantsUtils.RESOURCE_USERNAMES+ RestConstantsUtils.RESOURCE_USERNAME, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ReplicaResponse<UserRest>> userDetailsByUsername(@PathVariable String username) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
@@ -70,6 +70,19 @@ public class UserControllerRestImpl implements UserControllerRest {
     @DeleteMapping(value = RestConstantsUtils.RESOURCE_ID)
     public ResponseEntity deleteUser(@PathVariable Long id) throws ReplicaException {
         userService.deleteUser(id);
+
+        ReplicaResponse response = ReplicaResponse.builder()
+                .status(ReplicaResponseStatus.OK)
+                .message("User successfully deleted")
+                .build();
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+    }
+
+    @Override
+    @DeleteMapping(value = RestConstantsUtils.RESOURCE_USERNAMES+RestConstantsUtils.RESOURCE_USERNAME)
+    public ResponseEntity deleteUserByUsername(@PathVariable String username) throws ReplicaException {
+        userService.deleteUserByUsername(username);
 
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)

@@ -5,6 +5,7 @@ import com.salesianas.dam.replica.dto.CustomPagedResourceDTO;
 import com.salesianas.dam.replica.dto.EmployeeRest;
 import com.salesianas.dam.replica.dto.TeacherRest;
 import com.salesianas.dam.replica.exception.ReplicaException;
+import com.salesianas.dam.replica.payload.request.EditRequest;
 import com.salesianas.dam.replica.response.ReplicaResponse;
 import com.salesianas.dam.replica.response.ReplicaResponseStatus;
 import com.salesianas.dam.replica.service.impl.EmployeeServiceImpl;
@@ -44,7 +45,7 @@ public class EmployeeControllerRestImpl implements EmployeeControllerRest {
 
     @Override
     @GetMapping(value = RestConstantsUtils.RESOURCE_USERNAMES+RestConstantsUtils.RESOURCE_USERNAME, produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
+    //@PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     public ResponseEntity<ReplicaResponse<EmployeeRest>> employeeDetailsByUsername(@PathVariable String  username) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
@@ -62,6 +63,18 @@ public class EmployeeControllerRestImpl implements EmployeeControllerRest {
                 .status(ReplicaResponseStatus.OK)
                 .message("Employee successfully updated")
                 .data(employeeService.modifyEmployee(employee, id))
+                .build();
+
+        return ResponseEntity.accepted().body(response);
+    }
+
+    @Override
+    @PatchMapping(value = RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ReplicaResponse<EmployeeRest>> editEmployee(@RequestBody EditRequest employee, @PathVariable Long id) throws ReplicaException {
+        ReplicaResponse response = ReplicaResponse.builder()
+                .status(ReplicaResponseStatus.OK)
+                .message("Employee successfully updated")
+                .data(employeeService.editEmployee(employee, id))
                 .build();
 
         return ResponseEntity.accepted().body(response);
