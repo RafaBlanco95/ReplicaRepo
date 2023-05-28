@@ -53,8 +53,12 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentRest modifyStudent(StudentRest studentRest, Long id) throws ReplicaException {
         return studentMapper.studentEntityToStudentRest(studentRepository.findById(id).map(studentSaved -> {
-                    studentSaved = studentMapper.studentRestToStudentEntity(studentRest);
                     studentSaved.setId(id);
+                    studentSaved.setUsername(studentRest.getUsername());
+                    studentSaved.setName(studentRest.getName());
+                    studentSaved.setLastName(studentRest.getLastName());
+                    studentSaved.setLogin_user(studentRest.getLogin_user());
+
                     return studentRepository.save(studentSaved);
                 }).orElseThrow(() -> new ReplicaNotFoundException(String.format("Student with ID: [%s] not found.", id), "404"))
         );

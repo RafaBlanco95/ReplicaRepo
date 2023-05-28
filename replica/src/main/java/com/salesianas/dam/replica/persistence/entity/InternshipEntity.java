@@ -20,7 +20,7 @@ public class InternshipEntity {
     @Column(name = "id")
     private Long id;
 
-    @JsonIgnore
+
     @ManyToOne
     private StudentEntity student;
     @JsonIgnore

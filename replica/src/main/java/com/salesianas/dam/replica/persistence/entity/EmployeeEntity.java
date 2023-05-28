@@ -1,5 +1,6 @@
 package com.salesianas.dam.replica.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -24,6 +25,7 @@ public class EmployeeEntity {
     @Column(name = "last_name")
     private String lastName;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<InternshipEntity> internships;
 

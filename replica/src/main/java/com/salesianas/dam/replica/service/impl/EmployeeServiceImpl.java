@@ -54,8 +54,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeRest modifyEmployee(EmployeeRest employeeRest, Long id) throws ReplicaException {
         return employeeMapper.employeeEntityToEmployeeRest(employeeRepository.findById(id).map(employeeSaved -> {
-                    employeeSaved = employeeMapper.employeeRestToEmployeeEntity(employeeRest);
+
                     employeeSaved.setId(id);
+                    employeeSaved.setUsername(employeeRest.getUsername());
+                    employeeSaved.setName(employeeRest.getName());
+                    employeeSaved.setLastName(employeeRest.getLastName());
+                    employeeSaved.setLogin_user(employeeRest.getLogin_user());
                     return employeeRepository.save(employeeSaved);
                 }).orElseThrow(() -> new ReplicaNotFoundException(String.format("Employee with ID: [%s] not found.", id), "404"))
         );

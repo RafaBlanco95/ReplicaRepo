@@ -55,8 +55,12 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public TeacherRest modifyTeacher(TeacherRest teacherRest, Long id) throws ReplicaException {
         return teacherMapper.teacherEntityToTeacherRest(teacherRepository.findById(id).map(teacherSaved -> {
-                    teacherSaved = teacherMapper.teacherRestToTeacherEntity(teacherRest);
+
                     teacherSaved.setId(id);
+                    teacherSaved.setUsername(teacherRest.getUsername());
+                    teacherSaved.setName(teacherRest.getName());
+                    teacherSaved.setLastName(teacherRest.getLastName());
+                    teacherSaved.setLogin_user(teacherRest.getLogin_user());
                     return teacherRepository.save(teacherSaved);
                 }).orElseThrow(() -> new ReplicaNotFoundException(String.format("Teacher with ID: [%s] not found.", id), "404"))
         );
