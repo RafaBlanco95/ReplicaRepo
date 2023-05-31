@@ -21,6 +21,8 @@ public interface StudentControllerRest {
 
     ResponseEntity<ReplicaResponse<StudentRest>>  addInternshipToStudent(InternshipRest internshipRest, Long id) throws ReplicaException;
 
+    ResponseEntity<ReplicaResponse<StudentRest>>  associateTeacherToStudent(String username, Long id) throws ReplicaException;
+
 
     ResponseEntity deleteStudent(Long id) throws ReplicaException;
 

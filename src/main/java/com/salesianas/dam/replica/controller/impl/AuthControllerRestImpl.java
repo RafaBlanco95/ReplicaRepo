@@ -127,18 +127,24 @@ public class AuthControllerRestImpl implements AuthControllerRest{
                     .orElseThrow(() -> new RuntimeException(RestConstantsUtils.RESOURCE_ROLE_NOT_FOUND_ERROR)))){
                 StudentRest studentRest= new StudentRest();
                 studentRest.setLogin_user(user);
+                studentRest.setName(signUpRequest.getName());
+                studentRest.setLastName(signUpRequest.getLastName());
                 studentRest.setUsername(user.getUsername());
                 studentService.createStudent(studentRest);
             }else if((roles.contains(roleRepository.findByName(ERole.ROLE_TEACHER)
                     .orElseThrow(() -> new RuntimeException(RestConstantsUtils.RESOURCE_ROLE_NOT_FOUND_ERROR))))){
                 TeacherRest teacherRest= new TeacherRest();
                 teacherRest.setLogin_user(user);
+                teacherRest.setName(signUpRequest.getName());
+                teacherRest.setLastName(signUpRequest.getLastName());
                 teacherRest.setUsername(user.getUsername());
                teacherService.createTeacher(teacherRest);
             }else if((roles.contains(roleRepository.findByName(ERole.ROLE_EMPLOYEE)
                     .orElseThrow(() -> new RuntimeException(RestConstantsUtils.RESOURCE_ROLE_NOT_FOUND_ERROR))))){
                 EmployeeRest employeeRest= new EmployeeRest();
                 employeeRest.setLogin_user(user);
+                employeeRest.setName(signUpRequest.getName());
+                employeeRest.setLastName(signUpRequest.getLastName());
                 employeeRest.setUsername(user.getUsername());
                 employeeService.createEmployee(employeeRest);
             }

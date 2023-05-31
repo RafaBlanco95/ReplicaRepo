@@ -21,6 +21,8 @@ public interface StudentService {
 
     StudentRest addInternshipToStudent(InternshipRest internship, Long id) throws ReplicaException;
 
+    StudentRest associateTeacherToStudent(String username, Long id) throws ReplicaException;
+
     void deleteStudent(Long id) throws ReplicaException;
 
     StudentRest createStudent(StudentRest studentRest) throws ReplicaException;

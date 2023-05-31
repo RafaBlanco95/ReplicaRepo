@@ -94,6 +94,19 @@ public class StudentControllerRestImpl implements StudentControllerRest {
     }
 
     @Override
+    @PatchMapping(value = RestConstantsUtils.RESOURCE_USERNAME + RestConstantsUtils.RESOURCE_TEACHERS+RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ReplicaResponse<StudentRest>> associateTeacherToStudent(@PathVariable String username, @PathVariable Long id) throws ReplicaException {
+        ReplicaResponse response = ReplicaResponse.builder()
+                .status(ReplicaResponseStatus.OK)
+                .message("Student successfully updated")
+                .data(studentService.associateTeacherToStudent(username, id))
+                .build();
+
+        return ResponseEntity.accepted().body(response);
+    }
+
+
+    @Override
     @DeleteMapping(value = RestConstantsUtils.RESOURCE_ID)
     public ResponseEntity deleteStudent(@PathVariable Long id) throws ReplicaException {
         studentService.deleteStudent(id);

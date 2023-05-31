@@ -11,8 +11,10 @@ import com.salesianas.dam.replica.mapper.StudentMapper;
 import com.salesianas.dam.replica.payload.request.EditRequest;
 import com.salesianas.dam.replica.persistence.entity.InternshipEntity;
 import com.salesianas.dam.replica.persistence.entity.StudentEntity;
+import com.salesianas.dam.replica.persistence.entity.TeacherEntity;
 import com.salesianas.dam.replica.persistence.repository.InternshipRepository;
 import com.salesianas.dam.replica.persistence.repository.StudentRepository;
+import com.salesianas.dam.replica.persistence.repository.TeacherRepository;
 import com.salesianas.dam.replica.service.StudentService;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
+
+    @Autowired
+    private TeacherRepository teacherRepository;
 
     @Autowired
     private InternshipRepository internshipRepository;
@@ -96,6 +101,22 @@ public class StudentServiceImpl implements StudentService {
             studentSaved.setInternships(internshipEntityList);
             return studentRepository.save(studentSaved);
         }).orElseThrow(() -> new ReplicaNotFoundException(String.format("Student with ID: [%s] not found.", id), "404")));
+    }
+
+    @Override
+    public StudentRest associateTeacherToStudent(String username, Long id) throws ReplicaException {
+
+        StudentEntity studentEntity= studentRepository.findByUsername(username).orElseThrow(() -> new ReplicaNotFoundException(String.format("Student with Username: [%s] not found.", username), "404"));
+        TeacherEntity teacherEntity= teacherRepository.findById(id).orElseThrow(() -> new ReplicaNotFoundException(String.format("Teacher with ID: [%s] not found.", id), "404"));
+        List<StudentEntity> studentEntityList= teacherEntity.getStudents();
+        studentEntityList.add(studentEntity);
+        teacherEntity.setStudents(studentEntityList);
+        teacherRepository.save(teacherEntity);
+
+        return studentMapper.studentEntityToStudentRest(studentRepository.findByUsername(username).map(studentSaved->{
+            studentSaved.setTeacher(teacherEntity);
+            return studentRepository.save(studentSaved);
+        }).orElseThrow(() -> new ReplicaNotFoundException(String.format("Student with Username: [%s] not found.", username), "404")));
     }
 
     @Override
