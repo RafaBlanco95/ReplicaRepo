@@ -34,7 +34,7 @@ public class InternshipEntity {
     private LocalDate endingDate;
 
     @Column(name = "type")
-    private InternshipType type;
+    private String type;
 
     @Column(name = "totalHours")
     private Integer totalHours;

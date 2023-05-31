@@ -1,6 +1,7 @@
 package com.salesianas.dam.replica.service;
 
 import com.salesianas.dam.replica.dto.CustomPagedResourceDTO;
+import com.salesianas.dam.replica.dto.InternshipRest;
 import com.salesianas.dam.replica.dto.StudentRest;
 import com.salesianas.dam.replica.exception.ReplicaException;
 import com.salesianas.dam.replica.payload.request.EditRequest;
@@ -17,6 +18,8 @@ public interface StudentService {
     StudentRest modifyStudent(StudentRest student, Long id) throws ReplicaException;
 
     StudentRest editStudent(EditRequest student, Long id) throws ReplicaException;
+
+    StudentRest addInternshipToStudent(InternshipRest internship, Long id) throws ReplicaException;
 
     void deleteStudent(Long id) throws ReplicaException;
 

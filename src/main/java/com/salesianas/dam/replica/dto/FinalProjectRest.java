@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Data
@@ -23,5 +24,5 @@ public class FinalProjectRest implements Serializable {
     private String title;
 
     @JsonProperty("expositionDate")
-    private LocalTime expositionDate;
+    private LocalDate expositionDate;
 }

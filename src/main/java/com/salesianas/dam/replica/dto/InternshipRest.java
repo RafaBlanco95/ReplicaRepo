@@ -3,11 +3,18 @@ package com.salesianas.dam.replica.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.salesianas.dam.replica.persistence.entity.EmployeeEntity;
 import com.salesianas.dam.replica.persistence.entity.StudentEntity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class InternshipRest {
 
 
@@ -18,14 +25,17 @@ public class InternshipRest {
     private EmployeeEntity employee;
 
     @JsonProperty("startingDate")
-    private LocalTime startingDate;
+    private LocalDate startingDate;
 
     @JsonProperty("endingDate")
-    private LocalTime endingDate;
+    private LocalDate endingDate;
 
     @JsonProperty("type")
-    private InternshipType type;
+    private String type;
 
     @JsonProperty("totalHours")
     private Integer totalHours;
+
+    @JsonProperty("enterprise")
+    private String enterprise;
 }

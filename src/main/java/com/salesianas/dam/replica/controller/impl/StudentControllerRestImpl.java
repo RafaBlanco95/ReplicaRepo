@@ -2,6 +2,7 @@ package com.salesianas.dam.replica.controller.impl;
 
 import com.salesianas.dam.replica.controller.StudentControllerRest;
 import com.salesianas.dam.replica.dto.CustomPagedResourceDTO;
+import com.salesianas.dam.replica.dto.InternshipRest;
 import com.salesianas.dam.replica.dto.StudentRest;
 import com.salesianas.dam.replica.exception.ReplicaException;
 import com.salesianas.dam.replica.payload.request.EditRequest;
@@ -75,6 +76,18 @@ public class StudentControllerRestImpl implements StudentControllerRest {
                 .status(ReplicaResponseStatus.OK)
                 .message("Student successfully updated")
                 .data(studentService.editStudent(student, id))
+                .build();
+
+        return ResponseEntity.accepted().body(response);
+    }
+
+    @Override
+    @PatchMapping(value = RestConstantsUtils.RESOURCE_INTERNSHIPS+ RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ReplicaResponse<StudentRest>> addInternshipToStudent(@RequestBody InternshipRest internshipRest, @PathVariable Long id) throws ReplicaException {
+        ReplicaResponse response = ReplicaResponse.builder()
+                .status(ReplicaResponseStatus.OK)
+                .message("Student successfully updated")
+                .data(studentService.addInternshipToStudent(internshipRest, id))
                 .build();
 
         return ResponseEntity.accepted().body(response);
