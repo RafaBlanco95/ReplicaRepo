@@ -1,6 +1,7 @@
 package com.salesianas.dam.replica.controller;
 
 import com.salesianas.dam.replica.dto.CustomPagedResourceDTO;
+import com.salesianas.dam.replica.dto.FinalProjectRest;
 import com.salesianas.dam.replica.dto.InternshipRest;
 import com.salesianas.dam.replica.dto.StudentRest;
 import com.salesianas.dam.replica.exception.ReplicaException;
@@ -21,7 +22,11 @@ public interface StudentControllerRest {
 
     ResponseEntity<ReplicaResponse<StudentRest>>  addInternshipToStudent(InternshipRest internshipRest, Long id) throws ReplicaException;
 
+    ResponseEntity<ReplicaResponse<StudentRest>>  addFinalProjectToStudent(FinalProjectRest finalProjectRest, Long id) throws ReplicaException;
+
     ResponseEntity<ReplicaResponse<StudentRest>>  associateTeacherToStudent(String username, Long id) throws ReplicaException;
+
+    ResponseEntity<ReplicaResponse<StudentRest>>  associateEmployeeToStudentInternship(String username, Long id) throws ReplicaException;
 
 
     ResponseEntity deleteStudent(Long id) throws ReplicaException;

@@ -2,6 +2,7 @@ package com.salesianas.dam.replica.controller.impl;
 
 import com.salesianas.dam.replica.controller.StudentControllerRest;
 import com.salesianas.dam.replica.dto.CustomPagedResourceDTO;
+import com.salesianas.dam.replica.dto.FinalProjectRest;
 import com.salesianas.dam.replica.dto.InternshipRest;
 import com.salesianas.dam.replica.dto.StudentRest;
 import com.salesianas.dam.replica.exception.ReplicaException;
@@ -94,12 +95,36 @@ public class StudentControllerRestImpl implements StudentControllerRest {
     }
 
     @Override
+    @PatchMapping(value = RestConstantsUtils.RESOURCE_FINAL_PROJECTS+ RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ReplicaResponse<StudentRest>> addFinalProjectToStudent(@RequestBody FinalProjectRest finalProjectRest, @PathVariable Long id) throws ReplicaException {
+        ReplicaResponse response = ReplicaResponse.builder()
+                .status(ReplicaResponseStatus.OK)
+                .message("Student successfully updated")
+                .data(studentService.addFinalProjectToStudent(finalProjectRest, id))
+                .build();
+
+        return ResponseEntity.accepted().body(response);
+    }
+
+    @Override
     @PatchMapping(value = RestConstantsUtils.RESOURCE_USERNAME + RestConstantsUtils.RESOURCE_TEACHERS+RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ReplicaResponse<StudentRest>> associateTeacherToStudent(@PathVariable String username, @PathVariable Long id) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
                 .message("Student successfully updated")
                 .data(studentService.associateTeacherToStudent(username, id))
+                .build();
+
+        return ResponseEntity.accepted().body(response);
+    }
+
+    @Override
+    @PatchMapping(value = RestConstantsUtils.RESOURCE_USERNAME + RestConstantsUtils.RESOURCE_EMPLOYEES+RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ReplicaResponse<StudentRest>> associateEmployeeToStudentInternship(@PathVariable String username, @PathVariable Long id) throws ReplicaException {
+        ReplicaResponse response = ReplicaResponse.builder()
+                .status(ReplicaResponseStatus.OK)
+                .message("Student Internship successfully updated")
+                .data(studentService.associateEmployeeToStudentInternship(username, id))
                 .build();
 
         return ResponseEntity.accepted().body(response);

@@ -1,20 +1,14 @@
 package com.salesianas.dam.replica.service.impl;
 
-import com.salesianas.dam.replica.dto.CustomPagedResourceAssembler;
-import com.salesianas.dam.replica.dto.CustomPagedResourceDTO;
-import com.salesianas.dam.replica.dto.InternshipRest;
-import com.salesianas.dam.replica.dto.StudentRest;
+import com.salesianas.dam.replica.dto.*;
 import com.salesianas.dam.replica.exception.ReplicaException;
 import com.salesianas.dam.replica.exception.ReplicaNotFoundException;
+import com.salesianas.dam.replica.mapper.FinalProjectMapper;
 import com.salesianas.dam.replica.mapper.InternshipMapper;
 import com.salesianas.dam.replica.mapper.StudentMapper;
 import com.salesianas.dam.replica.payload.request.EditRequest;
-import com.salesianas.dam.replica.persistence.entity.InternshipEntity;
-import com.salesianas.dam.replica.persistence.entity.StudentEntity;
-import com.salesianas.dam.replica.persistence.entity.TeacherEntity;
-import com.salesianas.dam.replica.persistence.repository.InternshipRepository;
-import com.salesianas.dam.replica.persistence.repository.StudentRepository;
-import com.salesianas.dam.replica.persistence.repository.TeacherRepository;
+import com.salesianas.dam.replica.persistence.entity.*;
+import com.salesianas.dam.replica.persistence.repository.*;
 import com.salesianas.dam.replica.service.StudentService;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +29,19 @@ public class StudentServiceImpl implements StudentService {
     private TeacherRepository teacherRepository;
 
     @Autowired
+    private EmployeeRepository employeeRepository;
+
+    @Autowired
     private InternshipRepository internshipRepository;
 
     @Autowired
+    private FinalProjectRepository finalProjectRepository;
+
+    @Autowired
     private InternshipMapper internshipMapper;
+
+    @Autowired
+    private FinalProjectMapper finalProjectMapper;
 
     @Autowired
     private StudentMapper studentMapper;
@@ -104,6 +107,17 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public StudentRest addFinalProjectToStudent(FinalProjectRest finalProject, Long id) throws ReplicaException {
+        StudentEntity studentEntity= studentRepository.findById(id).orElseThrow(() -> new ReplicaNotFoundException(String.format("Student with ID: [%s] not found.", id), "404"));
+        finalProject.setStudent(studentEntity);
+        FinalProjectEntity finalProjectEntity= finalProjectRepository.save(finalProjectMapper.finalProjectRestToFinalProjectEntity(finalProject));
+        return studentMapper.studentEntityToStudentRest(studentRepository.findById(id).map(studentSaved->{
+            studentSaved.setFinalProject(finalProjectEntity);
+            return studentRepository.save(studentSaved);
+        }).orElseThrow(() -> new ReplicaNotFoundException(String.format("Student with ID: [%s] not found.", id), "404")));
+    }
+
+    @Override
     public StudentRest associateTeacherToStudent(String username, Long id) throws ReplicaException {
 
         StudentEntity studentEntity= studentRepository.findByUsername(username).orElseThrow(() -> new ReplicaNotFoundException(String.format("Student with Username: [%s] not found.", username), "404"));
@@ -115,6 +129,20 @@ public class StudentServiceImpl implements StudentService {
 
         return studentMapper.studentEntityToStudentRest(studentRepository.findByUsername(username).map(studentSaved->{
             studentSaved.setTeacher(teacherEntity);
+            return studentRepository.save(studentSaved);
+        }).orElseThrow(() -> new ReplicaNotFoundException(String.format("Student with Username: [%s] not found.", username), "404")));
+    }
+
+    @Override
+    public StudentRest associateEmployeeToStudentInternship(String username, Long id) throws ReplicaException {
+        StudentEntity studentEntity= studentRepository.findByUsername(username).orElseThrow(() -> new ReplicaNotFoundException(String.format("Student with Username: [%s] not found.", username), "404"));
+        EmployeeEntity employeeEntity = employeeRepository.findById(id).orElseThrow(() -> new ReplicaNotFoundException(String.format("Employee with ID: [%s] not found.", id), "404"));
+        List<InternshipEntity> internshipEntityList= studentEntity.getInternships();
+        internshipEntityList.get(0).setEmployee(employeeEntity);
+        employeeEntity.setInternships(studentEntity.getInternships());
+        employeeRepository.save(employeeEntity);
+        return studentMapper.studentEntityToStudentRest(studentRepository.findByUsername(username).map(studentSaved->{
+            studentSaved.setInternships(employeeEntity.getInternships());
             return studentRepository.save(studentSaved);
         }).orElseThrow(() -> new ReplicaNotFoundException(String.format("Student with Username: [%s] not found.", username), "404")));
     }

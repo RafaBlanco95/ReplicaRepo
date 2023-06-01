@@ -1,6 +1,7 @@
 package com.salesianas.dam.replica.service;
 
 import com.salesianas.dam.replica.dto.CustomPagedResourceDTO;
+import com.salesianas.dam.replica.dto.FinalProjectRest;
 import com.salesianas.dam.replica.dto.InternshipRest;
 import com.salesianas.dam.replica.dto.StudentRest;
 import com.salesianas.dam.replica.exception.ReplicaException;
@@ -21,7 +22,11 @@ public interface StudentService {
 
     StudentRest addInternshipToStudent(InternshipRest internship, Long id) throws ReplicaException;
 
+    StudentRest addFinalProjectToStudent(FinalProjectRest finalProject, Long id) throws ReplicaException;
+
     StudentRest associateTeacherToStudent(String username, Long id) throws ReplicaException;
+
+    StudentRest associateEmployeeToStudentInternship(String username, Long id) throws ReplicaException;
 
     void deleteStudent(Long id) throws ReplicaException;
 
