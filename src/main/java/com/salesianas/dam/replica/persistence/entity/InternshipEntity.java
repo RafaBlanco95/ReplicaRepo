@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Table(name = "internship")
@@ -41,5 +42,9 @@ public class InternshipEntity {
 
     @Column(name= "enterprise")
     private String enterprise;
+
+
+    @OneToMany(mappedBy = "internship", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<WorkdayEntity> workdays;
 
 }

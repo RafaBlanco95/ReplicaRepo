@@ -2,6 +2,7 @@ package com.salesianas.dam.replica.controller;
 
 import com.salesianas.dam.replica.dto.CustomPagedResourceDTO;
 import com.salesianas.dam.replica.dto.InternshipRest;
+import com.salesianas.dam.replica.dto.WorkdayRest;
 import com.salesianas.dam.replica.exception.ReplicaException;
 import com.salesianas.dam.replica.response.ReplicaResponse;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,11 @@ public interface InternshipControllerRest {
     ResponseEntity<ReplicaResponse<InternshipRest>>  createInternship(InternshipRest internshipRest) throws ReplicaException;
 
     ResponseEntity<ReplicaResponse<CustomPagedResourceDTO<InternshipRest>>> listInternships(
+            Pageable pageable
+    ) throws ReplicaException;
+
+    ResponseEntity<ReplicaResponse<CustomPagedResourceDTO<WorkdayRest>>> listInternshipWorkdays(
+            Long id,
             Pageable pageable
     ) throws ReplicaException;
 }

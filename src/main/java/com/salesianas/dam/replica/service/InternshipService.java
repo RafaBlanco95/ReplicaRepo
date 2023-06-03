@@ -3,6 +3,7 @@ package com.salesianas.dam.replica.service;
 import com.salesianas.dam.replica.dto.CustomPagedResourceDTO;
 import com.salesianas.dam.replica.dto.FinalProjectRest;
 import com.salesianas.dam.replica.dto.InternshipRest;
+import com.salesianas.dam.replica.dto.WorkdayRest;
 import com.salesianas.dam.replica.exception.ReplicaException;
 import org.springframework.data.domain.Pageable;
 
@@ -11,6 +12,8 @@ public interface InternshipService {
     InternshipRest getInternship(Long id) throws ReplicaException;
 
     CustomPagedResourceDTO<InternshipRest> listInternships(Pageable pageable) throws ReplicaException;
+
+    CustomPagedResourceDTO<WorkdayRest> listInternshipWorkdays(Long id, Pageable pageable) throws ReplicaException;
 
     InternshipRest modifyInternship(InternshipRest internshipRest, Long id) throws ReplicaException;
 

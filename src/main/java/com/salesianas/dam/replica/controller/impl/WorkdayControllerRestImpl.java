@@ -1,14 +1,12 @@
 package com.salesianas.dam.replica.controller.impl;
 
-import com.salesianas.dam.replica.controller.InternshipControllerRest;
+import com.salesianas.dam.replica.controller.WorkdayControllerRest;
 import com.salesianas.dam.replica.dto.CustomPagedResourceDTO;
-import com.salesianas.dam.replica.dto.InternshipRest;
 import com.salesianas.dam.replica.dto.WorkdayRest;
 import com.salesianas.dam.replica.exception.ReplicaException;
 import com.salesianas.dam.replica.response.ReplicaResponse;
 import com.salesianas.dam.replica.response.ReplicaResponseStatus;
-import com.salesianas.dam.replica.service.impl.FinalProjectServiceImpl;
-import com.salesianas.dam.replica.service.impl.InternshipServiceImpl;
+import com.salesianas.dam.replica.service.impl.WorkdayServiceImpl;
 import com.salesianas.dam.replica.utils.constant.RestConstantsUtils;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,19 +21,20 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
-@Tag(name = "Internship", description = "Internship rest")
-@RequestMapping(value = RestConstantsUtils.API_VERSION_1 + RestConstantsUtils.RESOURCE_INTERNSHIPS)
-public class InternshipControllerRestImpl implements InternshipControllerRest {
+@Tag(name = "Workday", description = "Workday rest")
+@RequestMapping(value = RestConstantsUtils.API_VERSION_1 + RestConstantsUtils.RESOURCE_WORKDAYS)
+public class WorkdayControllerRestImpl implements WorkdayControllerRest {
 
     @Autowired
-    private InternshipServiceImpl internshipService;
+    private WorkdayServiceImpl workdayService;
+
     @Override
     @GetMapping(value = RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReplicaResponse<InternshipRest>> internshipDetails(@PathVariable Long id) throws ReplicaException {
+    public ResponseEntity<ReplicaResponse<WorkdayRest>> workdayDetails(@PathVariable Long id) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
-                .message("Internship successfully recovered")
-                .data(internshipService.getInternship(id))
+                .message("Workday successfully recovered")
+                .data(workdayService.getWorkday(id))
                 .build();
 
         return ResponseEntity.ok(response);
@@ -43,11 +42,11 @@ public class InternshipControllerRestImpl implements InternshipControllerRest {
 
     @Override
     @PutMapping(value = RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReplicaResponse<InternshipRest>> modifyInternship(@RequestBody InternshipRest internship, @PathVariable Long id) throws ReplicaException {
+    public ResponseEntity<ReplicaResponse<WorkdayRest>> modifyWorkday(@RequestBody WorkdayRest workday, @PathVariable Long id) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
-                .message("Internship successfully updated")
-                .data(internshipService.modifyInternship(internship, id))
+                .message("Workday successfully updated")
+                .data(workdayService.modifyWorkday(workday, id))
                 .build();
 
         return ResponseEntity.accepted().body(response);
@@ -55,12 +54,12 @@ public class InternshipControllerRestImpl implements InternshipControllerRest {
 
     @Override
     @DeleteMapping(value = RestConstantsUtils.RESOURCE_ID)
-    public ResponseEntity deleteInternship(@PathVariable Long id) throws ReplicaException {
-        internshipService.deleteInternship(id);
+    public ResponseEntity deleteWorkday(@PathVariable Long id) throws ReplicaException {
+        workdayService.deleteWorkday(id);
 
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
-                .message("Internship successfully deleted")
+                .message("Workday successfully deleted")
                 .build();
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
@@ -68,11 +67,11 @@ public class InternshipControllerRestImpl implements InternshipControllerRest {
 
     @Override
     @PostMapping
-    public ResponseEntity<ReplicaResponse<InternshipRest>> createInternship(@RequestBody InternshipRest internshipRest) throws ReplicaException {
+    public ResponseEntity<ReplicaResponse<WorkdayRest>> createWorkday(@RequestBody WorkdayRest workdayRest) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
-                .message("Internship successfully created")
-                .data(internshipService.createInternship(internshipRest))
+                .message("Workday successfully created")
+                .data(workdayService.createWorkday(workdayRest))
                 .build();
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -80,23 +79,11 @@ public class InternshipControllerRestImpl implements InternshipControllerRest {
 
     @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReplicaResponse<CustomPagedResourceDTO<InternshipRest>>> listInternships(@Parameter(hidden=true)Pageable pageable) throws ReplicaException {
-        ReplicaResponse response = ReplicaResponse.builder()
-                .status(ReplicaResponseStatus.OK)
-                .message("Internships successfully recovered")
-                .data(internshipService.listInternships(pageable))
-                .build();
-
-        return ResponseEntity.ok(response);
-    }
-
-    @Override
-    @GetMapping(value = RestConstantsUtils.RESOURCE_ID + RestConstantsUtils.RESOURCE_WORKDAYS)
-    public ResponseEntity<ReplicaResponse<CustomPagedResourceDTO<WorkdayRest>>> listInternshipWorkdays(@PathVariable Long id, Pageable pageable) throws ReplicaException {
+    public ResponseEntity<ReplicaResponse<CustomPagedResourceDTO<WorkdayRest>>> listWorkdays(@Parameter(hidden=true)Pageable pageable) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
                 .message("Workdays successfully recovered")
-                .data(internshipService.listInternshipWorkdays(id, pageable))
+                .data(workdayService.listWorkdays(pageable))
                 .build();
 
         return ResponseEntity.ok(response);

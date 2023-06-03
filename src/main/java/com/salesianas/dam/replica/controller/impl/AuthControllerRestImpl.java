@@ -138,6 +138,7 @@ public class AuthControllerRestImpl implements AuthControllerRest{
                 teacherRest.setName(signUpRequest.getName());
                 teacherRest.setLastName(signUpRequest.getLastName());
                 teacherRest.setUsername(user.getUsername());
+                teacherRest.setCenter(signUpRequest.getCenter());
                teacherService.createTeacher(teacherRest);
             }else if((roles.contains(roleRepository.findByName(ERole.ROLE_EMPLOYEE)
                     .orElseThrow(() -> new RuntimeException(RestConstantsUtils.RESOURCE_ROLE_NOT_FOUND_ERROR))))){
@@ -146,6 +147,7 @@ public class AuthControllerRestImpl implements AuthControllerRest{
                 employeeRest.setName(signUpRequest.getName());
                 employeeRest.setLastName(signUpRequest.getLastName());
                 employeeRest.setUsername(user.getUsername());
+
                 employeeService.createEmployee(employeeRest);
             }
             return ResponseEntity.ok(new MessageResponse(RestConstantsUtils.USER_REGISTER_SUCCESS));
