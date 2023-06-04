@@ -40,6 +40,10 @@ public class RestConstantsUtils {
 
     public static final String RESOURCE_WORKDAYS = "/workdays";
 
+    //MEETINGS
+
+    public static final String RESOURCE_MEETINGS = "/meetings";
+
     // ========= ROLE =========
     public static final String RESOURCE_ROLES = "/roles";
 

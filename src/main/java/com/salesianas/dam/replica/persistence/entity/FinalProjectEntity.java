@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 
 @Entity
@@ -30,6 +31,8 @@ public class FinalProjectEntity {
     @Column(name = "expositionDate")
     private LocalDate expositionDate;
 
-    //@OneToMany
-    //private List<String> progress;
+    @JsonIgnore
+    @OneToMany(mappedBy = "finalProject", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<MeetingEntity> meetings;
+
 }

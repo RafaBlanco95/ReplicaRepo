@@ -1,22 +1,21 @@
 package com.salesianas.dam.replica.service.impl;
 
-import com.salesianas.dam.replica.dto.CustomPagedResourceAssembler;
-import com.salesianas.dam.replica.dto.CustomPagedResourceDTO;
-import com.salesianas.dam.replica.dto.EmployeeRest;
-import com.salesianas.dam.replica.dto.FinalProjectRest;
+import com.salesianas.dam.replica.dto.*;
 import com.salesianas.dam.replica.exception.ReplicaException;
 import com.salesianas.dam.replica.exception.ReplicaNotFoundException;
 import com.salesianas.dam.replica.mapper.EmployeeMapper;
 import com.salesianas.dam.replica.mapper.FinalProjectMapper;
-import com.salesianas.dam.replica.persistence.entity.EmployeeEntity;
-import com.salesianas.dam.replica.persistence.entity.FinalProjectEntity;
+import com.salesianas.dam.replica.mapper.MeetingMapper;
+import com.salesianas.dam.replica.persistence.entity.*;
 import com.salesianas.dam.replica.persistence.repository.EmployeeRepository;
 import com.salesianas.dam.replica.persistence.repository.FinalProjectRepository;
+import com.salesianas.dam.replica.persistence.repository.MeetingRepository;
 import com.salesianas.dam.replica.service.FinalProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FinalProjectServiceImpl implements FinalProjectService {
@@ -25,10 +24,19 @@ public class FinalProjectServiceImpl implements FinalProjectService {
     private FinalProjectRepository finalProjectRepository;
 
     @Autowired
+    private MeetingRepository meetingRepository;
+
+    @Autowired
     private FinalProjectMapper finalProjectMapper;
 
     @Autowired
+    private MeetingMapper meetingMapper;
+
+    @Autowired
     CustomPagedResourceAssembler<FinalProjectRest> customPagedResourceAssembler;
+
+    @Autowired
+    CustomPagedResourceAssembler<MeetingRest> customPagedResourceAssemblerMeeting;
     @Override
     public FinalProjectRest getFinalProject(Long id) throws ReplicaException {
         return finalProjectRepository.findById(id)
@@ -41,6 +49,15 @@ public class FinalProjectServiceImpl implements FinalProjectService {
         Page<FinalProjectEntity> finalProjectPage = finalProjectRepository.findAll(pageable);
         Page<FinalProjectRest> finalProjectRestPage = finalProjectPage.map(finalProjectMapper::finalProjectEntityToFinalProjectRest);
         return  customPagedResourceAssembler.toModel(finalProjectRestPage);
+    }
+
+    @Override
+    @Transactional
+    public CustomPagedResourceDTO<MeetingRest> listFinalProjectMeetings(Long id, Pageable pageable) throws ReplicaException {
+        FinalProjectEntity finalProjectEntity= finalProjectRepository.findById(id).orElseThrow( ()->new ReplicaNotFoundException(String.format("Final Project with ID: [%s] not found.", id), "404"));
+        Page<MeetingEntity> meetingPage= meetingRepository.findByFinalProject(finalProjectEntity,pageable);
+        Page<MeetingRest> meetingRestPage= meetingPage.map(meetingMapper::meetingEntityToMeetingRest);
+        return customPagedResourceAssemblerMeeting.toModel(meetingRestPage);
     }
 
     @Override

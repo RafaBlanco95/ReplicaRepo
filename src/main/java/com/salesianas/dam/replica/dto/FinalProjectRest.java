@@ -1,6 +1,7 @@
 package com.salesianas.dam.replica.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.salesianas.dam.replica.persistence.entity.MeetingEntity;
 import com.salesianas.dam.replica.persistence.entity.StudentEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -25,4 +27,6 @@ public class FinalProjectRest implements Serializable {
 
     @JsonProperty("expositionDate")
     private LocalDate expositionDate;
+    @JsonProperty("meetings")
+    private List<MeetingEntity> meetings;
 }

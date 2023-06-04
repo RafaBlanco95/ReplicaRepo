@@ -3,6 +3,7 @@ package com.salesianas.dam.replica.controller.impl;
 import com.salesianas.dam.replica.controller.FinalProjectControllerRest;
 import com.salesianas.dam.replica.dto.CustomPagedResourceDTO;
 import com.salesianas.dam.replica.dto.FinalProjectRest;
+import com.salesianas.dam.replica.dto.MeetingRest;
 import com.salesianas.dam.replica.exception.ReplicaException;
 import com.salesianas.dam.replica.response.ReplicaResponse;
 import com.salesianas.dam.replica.response.ReplicaResponseStatus;
@@ -83,6 +84,18 @@ public class FinalProjectControllerRestImpl implements FinalProjectControllerRes
                 .status(ReplicaResponseStatus.OK)
                 .message("FinalProjects successfully recovered")
                 .data(finalProjectService.listFinalProject(pageable))
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    @GetMapping(value = RestConstantsUtils.RESOURCE_ID + RestConstantsUtils.RESOURCE_MEETINGS)
+    public ResponseEntity<ReplicaResponse<CustomPagedResourceDTO<MeetingRest>>> listInternshipMeetings(@PathVariable Long id, Pageable pageable) throws ReplicaException {
+        ReplicaResponse response = ReplicaResponse.builder()
+                .status(ReplicaResponseStatus.OK)
+                .message("Meetings successfully recovered")
+                .data(finalProjectService.listFinalProjectMeetings(id, pageable))
                 .build();
 
         return ResponseEntity.ok(response);
