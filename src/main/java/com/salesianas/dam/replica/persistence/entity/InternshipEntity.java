@@ -43,7 +43,7 @@ public class InternshipEntity {
     @Column(name= "enterprise")
     private String enterprise;
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "internship", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<WorkdayEntity> workdays;
 

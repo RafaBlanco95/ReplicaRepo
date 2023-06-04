@@ -15,7 +15,11 @@ public interface WorkdayService {
 
     WorkdayRest modifyWorkday(WorkdayRest workdayRest, Long id) throws ReplicaException;
 
+    WorkdayRest validateWorkday(Long id) throws ReplicaException;
+
     void deleteWorkday(Long id) throws ReplicaException;
 
     WorkdayRest createWorkday(WorkdayRest workdayRest) throws ReplicaException;
+
+    WorkdayRest createWorkdayByInternship(WorkdayRest workdayRest, Long id) throws ReplicaException;
 }

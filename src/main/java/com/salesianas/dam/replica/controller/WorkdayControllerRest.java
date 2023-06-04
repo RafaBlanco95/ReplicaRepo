@@ -13,9 +13,13 @@ public interface WorkdayControllerRest {
 
     ResponseEntity<ReplicaResponse<WorkdayRest>>  modifyWorkday(WorkdayRest workday, Long id) throws ReplicaException;
 
+    ResponseEntity<ReplicaResponse<WorkdayRest>>  validateWorkday(Long id) throws ReplicaException;
+
     ResponseEntity deleteWorkday(Long id) throws ReplicaException;
 
     ResponseEntity<ReplicaResponse<WorkdayRest>>  createWorkday(WorkdayRest workdayRest) throws ReplicaException;
+
+    ResponseEntity<ReplicaResponse<WorkdayRest>>  createWorkdayByInternship(WorkdayRest workdayRest, Long id) throws ReplicaException;
 
     ResponseEntity<ReplicaResponse<CustomPagedResourceDTO<WorkdayRest>>> listWorkdays(
             Pageable pageable

@@ -17,6 +17,8 @@ public interface MeetingControllerRest {
 
     ResponseEntity<ReplicaResponse<MeetingRest>>  createMeeting(MeetingRest meetingRest) throws ReplicaException;
 
+    ResponseEntity<ReplicaResponse<MeetingRest>>  createMeetingByFinalProject(MeetingRest meetingRest, Long id) throws ReplicaException;
+
     ResponseEntity<ReplicaResponse<CustomPagedResourceDTO<MeetingRest>>> listMeetings(
             Pageable pageable
     ) throws ReplicaException;

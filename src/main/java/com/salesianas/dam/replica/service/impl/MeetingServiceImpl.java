@@ -6,10 +6,13 @@ import com.salesianas.dam.replica.dto.MeetingRest;
 import com.salesianas.dam.replica.dto.WorkdayRest;
 import com.salesianas.dam.replica.exception.ReplicaException;
 import com.salesianas.dam.replica.exception.ReplicaNotFoundException;
+import com.salesianas.dam.replica.mapper.FinalProjectMapper;
 import com.salesianas.dam.replica.mapper.MeetingMapper;
 import com.salesianas.dam.replica.mapper.WorkdayMapper;
+import com.salesianas.dam.replica.persistence.entity.FinalProjectEntity;
 import com.salesianas.dam.replica.persistence.entity.MeetingEntity;
 import com.salesianas.dam.replica.persistence.entity.WorkdayEntity;
+import com.salesianas.dam.replica.persistence.repository.FinalProjectRepository;
 import com.salesianas.dam.replica.persistence.repository.MeetingRepository;
 import com.salesianas.dam.replica.persistence.repository.WorkdayRepository;
 import com.salesianas.dam.replica.service.MeetingService;
@@ -25,7 +28,13 @@ public class MeetingServiceImpl implements MeetingService {
     private MeetingRepository meetingRepository;
 
     @Autowired
+    private FinalProjectRepository finalProjectRepository;
+
+    @Autowired
     private MeetingMapper meetingMapper;
+
+    @Autowired
+    private FinalProjectMapper finalProjectMapper;
 
     @Autowired
     CustomPagedResourceAssembler<MeetingRest> customPagedResourceAssembler;
@@ -64,5 +73,13 @@ public class MeetingServiceImpl implements MeetingService {
     @Override
     public MeetingRest createMeeting(MeetingRest meetingRest) throws ReplicaException {
         return meetingMapper.meetingEntityToMeetingRest(meetingRepository.save(meetingMapper.meetingRestToMeetingEntity(meetingRest)));
+    }
+
+    @Override
+    public MeetingRest createMeetingByFinalProject(MeetingRest meetingRest, Long id) throws ReplicaException {
+        FinalProjectEntity finalProjectEntity= finalProjectRepository.findById(id).orElseThrow( ()->new ReplicaNotFoundException(String.format("Final Project with ID: [%s] not found.", id), "404"));
+        meetingRest.setFinalProject(finalProjectEntity);
+        return meetingMapper.meetingEntityToMeetingRest(meetingRepository.save(meetingMapper.meetingRestToMeetingEntity(meetingRest)));
+
     }
 }

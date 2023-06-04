@@ -79,6 +79,18 @@ public class MeetingControllerRestImpl implements MeetingControllerRest {
     }
 
     @Override
+    @PostMapping(value = RestConstantsUtils.RESOURCE_FINAL_PROJECTS+RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ReplicaResponse<MeetingRest>> createMeetingByFinalProject(@RequestBody MeetingRest meetingRest, @PathVariable Long id) throws ReplicaException {
+        ReplicaResponse response = ReplicaResponse.builder()
+                .status(ReplicaResponseStatus.OK)
+                .message("Meeting successfully created")
+                .data(meetingService.createMeetingByFinalProject(meetingRest, id))
+                .build();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ReplicaResponse<CustomPagedResourceDTO<MeetingRest>>> listMeetings(@Parameter(hidden=true) Pageable pageable) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()

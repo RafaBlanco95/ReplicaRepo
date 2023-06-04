@@ -17,4 +17,6 @@ public interface MeetingService {
     void deleteMeeting(Long id) throws ReplicaException;
 
     MeetingRest createMeeting(MeetingRest meetingRest) throws ReplicaException;
+
+    MeetingRest createMeetingByFinalProject(MeetingRest meetingRest, Long id) throws ReplicaException;
 }

@@ -7,10 +7,13 @@ import com.salesianas.dam.replica.dto.WorkdayRest;
 import com.salesianas.dam.replica.exception.ReplicaException;
 import com.salesianas.dam.replica.exception.ReplicaNotFoundException;
 
+import com.salesianas.dam.replica.mapper.InternshipMapper;
 import com.salesianas.dam.replica.mapper.WorkdayMapper;
 
+import com.salesianas.dam.replica.persistence.entity.InternshipEntity;
 import com.salesianas.dam.replica.persistence.entity.WorkdayEntity;
 
+import com.salesianas.dam.replica.persistence.repository.InternshipRepository;
 import com.salesianas.dam.replica.persistence.repository.WorkdayRepository;
 import com.salesianas.dam.replica.service.WorkdayService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +28,13 @@ public class WorkdayServiceImpl implements WorkdayService {
     private WorkdayRepository workdayRepository;
 
     @Autowired
+    private InternshipRepository internshipRepository;
+
+    @Autowired
     private WorkdayMapper workdayMapper;
+
+    @Autowired
+    private InternshipMapper internshipMapper;
 
     @Autowired
     CustomPagedResourceAssembler<WorkdayRest> customPagedResourceAssembler;
@@ -55,13 +64,29 @@ public class WorkdayServiceImpl implements WorkdayService {
     }
 
     @Override
+    public WorkdayRest validateWorkday(Long id) throws ReplicaException {
+        return workdayMapper.workdayEntityToWorkdayRest(workdayRepository.findById(id).map(workdaySaved -> {
+                    workdaySaved.setIsValidated(true);
+                    return workdayRepository.save(workdaySaved);
+                }).orElseThrow(() -> new ReplicaNotFoundException(String.format("Workday with ID: [%s] not found.", id), "404"))
+        );
+    }
+
+    @Override
     public void deleteWorkday(Long id) throws ReplicaException {
-        WorkdayEntity workdayEntity= workdayRepository.findById(id).orElseThrow( ()->new ReplicaNotFoundException(String.format("Workday with ID: [%s] not found.", id), "404"));
-        workdayRepository.delete(workdayEntity);
+        workdayRepository.deleteById(id);
     }
 
     @Override
     public WorkdayRest createWorkday(WorkdayRest workdayRest) throws ReplicaException {
         return workdayMapper.workdayEntityToWorkdayRest(workdayRepository.save(workdayMapper.workdayRestToWorkdayEntity(workdayRest)));
+    }
+
+    @Override
+    public WorkdayRest createWorkdayByInternship(WorkdayRest workdayRest, Long id) throws ReplicaException {
+        InternshipEntity internshipEntity= internshipRepository.findById(id).orElseThrow( ()->new ReplicaNotFoundException(String.format("Internship with ID: [%s] not found.", id), "404"));
+        workdayRest.setInternship(internshipEntity);
+        return workdayMapper.workdayEntityToWorkdayRest(workdayRepository.save(workdayMapper.workdayRestToWorkdayEntity(workdayRest)));
+
     }
 }

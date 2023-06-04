@@ -53,6 +53,18 @@ public class WorkdayControllerRestImpl implements WorkdayControllerRest {
     }
 
     @Override
+    @PatchMapping(value = RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ReplicaResponse<WorkdayRest>> validateWorkday(@PathVariable Long id) throws ReplicaException {
+        ReplicaResponse response = ReplicaResponse.builder()
+                .status(ReplicaResponseStatus.OK)
+                .message("Workday successfully updated")
+                .data(workdayService.validateWorkday( id))
+                .build();
+
+        return ResponseEntity.accepted().body(response);
+    }
+
+    @Override
     @DeleteMapping(value = RestConstantsUtils.RESOURCE_ID)
     public ResponseEntity deleteWorkday(@PathVariable Long id) throws ReplicaException {
         workdayService.deleteWorkday(id);
@@ -72,6 +84,18 @@ public class WorkdayControllerRestImpl implements WorkdayControllerRest {
                 .status(ReplicaResponseStatus.OK)
                 .message("Workday successfully created")
                 .data(workdayService.createWorkday(workdayRest))
+                .build();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @Override
+    @PostMapping(value = RestConstantsUtils.RESOURCE_INTERNSHIPS+RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ReplicaResponse<WorkdayRest>> createWorkdayByInternship(@RequestBody WorkdayRest workdayRest, @PathVariable Long id) throws ReplicaException {
+        ReplicaResponse response = ReplicaResponse.builder()
+                .status(ReplicaResponseStatus.OK)
+                .message("Workday successfully created")
+                .data(workdayService.createWorkdayByInternship(workdayRest, id))
                 .build();
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
