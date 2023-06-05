@@ -7,6 +7,8 @@ import com.salesianas.dam.replica.dto.WorkdayRest;
 import com.salesianas.dam.replica.exception.ReplicaException;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface InternshipService {
 
     InternshipRest getInternship(Long id) throws ReplicaException;
@@ -14,6 +16,8 @@ public interface InternshipService {
     CustomPagedResourceDTO<InternshipRest> listInternships(Pageable pageable) throws ReplicaException;
 
     CustomPagedResourceDTO<WorkdayRest> listInternshipWorkdays(Long id, Pageable pageable) throws ReplicaException;
+
+    List<InternshipRest> listInternshipByStudentUsername(String username) throws ReplicaException;
 
     InternshipRest modifyInternship(InternshipRest internshipRest, Long id) throws ReplicaException;
 

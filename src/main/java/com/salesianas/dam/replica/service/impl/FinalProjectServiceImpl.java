@@ -38,6 +38,7 @@ public class FinalProjectServiceImpl implements FinalProjectService {
     @Autowired
     CustomPagedResourceAssembler<MeetingRest> customPagedResourceAssemblerMeeting;
     @Override
+    @Transactional
     public FinalProjectRest getFinalProject(Long id) throws ReplicaException {
         return finalProjectRepository.findById(id)
                 .map(finalProject -> finalProjectMapper.finalProjectEntityToFinalProjectRest(finalProject)).orElseThrow( ()->new ReplicaNotFoundException(String.format("FinalProject with ID: [%s] not found.", id), "404"));

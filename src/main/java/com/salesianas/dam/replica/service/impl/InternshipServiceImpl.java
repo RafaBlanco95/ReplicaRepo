@@ -19,6 +19,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class InternshipServiceImpl implements InternshipService {
 
@@ -60,6 +62,11 @@ public class InternshipServiceImpl implements InternshipService {
         Page<WorkdayEntity> workdayPage= workdayRepository.findByInternship(internshipEntity,pageable);
         Page<WorkdayRest> workdayRestPage= workdayPage.map(workdayMapper::workdayEntityToWorkdayRest);
         return customPagedResourceAssemblerWorkday.toModel(workdayRestPage);
+    }
+
+    @Override
+    public List<InternshipRest> listInternshipByStudentUsername(String username) throws ReplicaException {
+        return internshipMapper.internshipEntityListToInternshipRestList(internshipRepository.findByStudentUsername(username));
     }
 
     @Override

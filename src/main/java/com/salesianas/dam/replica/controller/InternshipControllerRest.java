@@ -8,6 +8,8 @@ import com.salesianas.dam.replica.response.ReplicaResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface InternshipControllerRest {
 
     ResponseEntity<ReplicaResponse<InternshipRest>> internshipDetails(Long id) throws ReplicaException;
@@ -20,6 +22,10 @@ public interface InternshipControllerRest {
 
     ResponseEntity<ReplicaResponse<CustomPagedResourceDTO<InternshipRest>>> listInternships(
             Pageable pageable
+    ) throws ReplicaException;
+
+    ResponseEntity<ReplicaResponse<List<InternshipRest>>> listInternshipsByUsername(
+            String username
     ) throws ReplicaException;
 
     ResponseEntity<ReplicaResponse<CustomPagedResourceDTO<WorkdayRest>>> listInternshipWorkdays(

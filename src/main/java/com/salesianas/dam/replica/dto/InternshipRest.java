@@ -19,7 +19,8 @@ import java.util.List;
 @AllArgsConstructor
 public class InternshipRest {
 
-
+    @JsonProperty("id")
+    private Long id;
     @JsonProperty("student")
     private StudentEntity student;
 

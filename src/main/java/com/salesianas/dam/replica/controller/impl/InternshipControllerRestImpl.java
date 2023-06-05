@@ -20,6 +20,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
@@ -85,6 +87,18 @@ public class InternshipControllerRestImpl implements InternshipControllerRest {
                 .status(ReplicaResponseStatus.OK)
                 .message("Internships successfully recovered")
                 .data(internshipService.listInternships(pageable))
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    @GetMapping(value = RestConstantsUtils.RESOURCE_USERNAMES+ RestConstantsUtils.RESOURCE_USERNAME, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ReplicaResponse<List<InternshipRest>>> listInternshipsByUsername(@PathVariable String username) throws ReplicaException {
+        ReplicaResponse response = ReplicaResponse.builder()
+                .status(ReplicaResponseStatus.OK)
+                .message("Internships successfully recovered")
+                .data(internshipService.listInternshipByStudentUsername(username))
                 .build();
 
         return ResponseEntity.ok(response);

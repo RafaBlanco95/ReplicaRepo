@@ -16,4 +16,6 @@ public interface WorkdayRepository extends PagingAndSortingRepository<WorkdayEnt
     Page<WorkdayEntity> findAll(Pageable page);
 
     Page<WorkdayEntity> findByInternship(InternshipEntity internshipEntity, Pageable pageable);
+
+    void deleteById(Long id);
 }

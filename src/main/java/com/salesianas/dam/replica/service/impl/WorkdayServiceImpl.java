@@ -3,6 +3,7 @@ package com.salesianas.dam.replica.service.impl;
 import com.salesianas.dam.replica.dto.CustomPagedResourceAssembler;
 import com.salesianas.dam.replica.dto.CustomPagedResourceDTO;
 
+import com.salesianas.dam.replica.dto.InternshipRest;
 import com.salesianas.dam.replica.dto.WorkdayRest;
 import com.salesianas.dam.replica.exception.ReplicaException;
 import com.salesianas.dam.replica.exception.ReplicaNotFoundException;
@@ -20,6 +21,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class WorkdayServiceImpl implements WorkdayService {
@@ -73,6 +78,7 @@ public class WorkdayServiceImpl implements WorkdayService {
     }
 
     @Override
+    @Transactional
     public void deleteWorkday(Long id) throws ReplicaException {
         workdayRepository.deleteById(id);
     }
@@ -84,7 +90,15 @@ public class WorkdayServiceImpl implements WorkdayService {
 
     @Override
     public WorkdayRest createWorkdayByInternship(WorkdayRest workdayRest, Long id) throws ReplicaException {
-        InternshipEntity internshipEntity= internshipRepository.findById(id).orElseThrow( ()->new ReplicaNotFoundException(String.format("Internship with ID: [%s] not found.", id), "404"));
+       InternshipEntity internshipEntity= internshipRepository.findById(id).orElseThrow( ()->new ReplicaNotFoundException(String.format("Internship with ID: [%s] not found.", id), "404"));
+         internshipRepository.findById(id).map(internshipSaved -> {
+                   List<WorkdayEntity> workdayEntityList= internshipSaved.getWorkdays();
+                   workdayEntityList.add(workdayMapper.workdayRestToWorkdayEntity(workdayRest));
+                   internshipSaved.setWorkdays(workdayEntityList);
+                    internshipSaved.setId(id);
+                    return internshipSaved;
+                }).orElseThrow(() -> new ReplicaNotFoundException(String.format("Internship with ID: [%s] not found.", id), "404")
+        );
         workdayRest.setInternship(internshipEntity);
         return workdayMapper.workdayEntityToWorkdayRest(workdayRepository.save(workdayMapper.workdayRestToWorkdayEntity(workdayRest)));
 
