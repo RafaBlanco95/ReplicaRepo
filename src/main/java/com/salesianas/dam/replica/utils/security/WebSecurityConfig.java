@@ -64,28 +64,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http
-				.requiresChannel()
-				.anyRequest().requiresSecure()
-				.and()
-				.portMapper()
-				.http(8080).mapsTo(443)
-				.and()
-				.cors().configurationSource(corsConfigurationSource())
-				.and()
-				.csrf()
-				.disable()
-				.exceptionHandling()
-				.authenticationEntryPoint(unauthorizedHandler)
-				.and()
-				.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and()
-				.authorizeRequests()
-				.antMatchers("/api/auth/**").permitAll()
-				.antMatchers("/v1/**").permitAll()
-				.antMatchers("/swagger-ui/**").permitAll()
-				.antMatchers("/netflix/tvShows/**").authenticated();
+		http.cors().configurationSource(corsConfigurationSource()).and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+				.antMatchers("/api/auth/**").permitAll().antMatchers("/replica/v1/**").permitAll().antMatchers("/swagger-ui/**").permitAll().antMatchers("/netflix/tvShows/**")
+				.authenticated();
 
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
