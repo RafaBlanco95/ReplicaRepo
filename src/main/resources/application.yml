@@ -1,9 +1,4 @@
-server:
-  port: 8080
-  servlet.context-path: /replica
-  tomcat:
-    max-http-post-size: 100000000
-    max-swallow-size: 100000000
+
 spring:
   main:
     allow-bean-definition-overriding: true
