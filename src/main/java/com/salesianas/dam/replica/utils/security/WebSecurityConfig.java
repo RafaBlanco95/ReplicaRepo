@@ -60,11 +60,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
-		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-				.antMatchers("/api/auth/**").permitAll().antMatchers("/replica/v1/**").permitAll().antMatchers("/swagger-ui/**").permitAll().antMatchers("/netflix/tvShows/**")
-				.authenticated();
+		http
+				.requiresChannel()
+				.anyRequest().requiresSecure()
+				.and()
+				.cors()
+				.and()
+				.csrf()
+				.disable()
+				.exceptionHandling()
+				.authenticationEntryPoint(unauthorizedHandler)
+				.and()
+				.sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
+				.authorizeRequests()
+				.antMatchers("/api/auth/**").permitAll()
+				.antMatchers("/replica/v1/**").permitAll()
+				.antMatchers("/swagger-ui/**").permitAll()
+				.antMatchers("/netflix/tvShows/**").authenticated();
+
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 }
