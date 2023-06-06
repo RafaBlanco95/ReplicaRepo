@@ -83,7 +83,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.authorizeRequests()
 				.antMatchers("/api/auth/**").permitAll()
-				.antMatchers("/replica/v1/**").permitAll()
+				.antMatchers("/v1/**").permitAll()
 				.antMatchers("/swagger-ui/**").permitAll()
 				.antMatchers("/netflix/tvShows/**").authenticated();
 
