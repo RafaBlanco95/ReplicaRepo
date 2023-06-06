@@ -64,6 +64,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.requiresChannel()
 				.anyRequest().requiresSecure()
 				.and()
+				.portMapper()
+				.http(8080).mapsTo(443)
+				.and()
 				.cors()
 				.and()
 				.csrf()
@@ -82,4 +85,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
+
 }
