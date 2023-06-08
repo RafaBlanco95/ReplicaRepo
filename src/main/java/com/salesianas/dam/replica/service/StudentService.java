@@ -16,6 +16,8 @@ public interface StudentService {
 
     CustomPagedResourceDTO<StudentRest> listStudents(Pageable pageable) throws ReplicaException;
 
+    CustomPagedResourceDTO<StudentRest> listStudentsByTeacher(Pageable pageable, String username) throws ReplicaException;
+
     StudentRest modifyStudent(StudentRest student, Long id) throws ReplicaException;
 
     StudentRest editStudent(EditRequest student, Long id) throws ReplicaException;

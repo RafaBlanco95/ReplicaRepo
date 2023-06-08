@@ -36,4 +36,8 @@ public interface StudentControllerRest {
     ResponseEntity<ReplicaResponse<CustomPagedResourceDTO<StudentRest>>> listStudents(
             Pageable pageable
     ) throws ReplicaException;
+
+    ResponseEntity<ReplicaResponse<CustomPagedResourceDTO<StudentRest>>> listStudentsByTeacher(
+            Pageable pageable, String username
+    ) throws ReplicaException;
 }

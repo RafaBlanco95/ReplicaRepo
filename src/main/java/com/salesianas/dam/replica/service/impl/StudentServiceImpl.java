@@ -6,6 +6,7 @@ import com.salesianas.dam.replica.exception.ReplicaNotFoundException;
 import com.salesianas.dam.replica.mapper.FinalProjectMapper;
 import com.salesianas.dam.replica.mapper.InternshipMapper;
 import com.salesianas.dam.replica.mapper.StudentMapper;
+import com.salesianas.dam.replica.mapper.TeacherMapper;
 import com.salesianas.dam.replica.payload.request.EditRequest;
 import com.salesianas.dam.replica.persistence.entity.*;
 import com.salesianas.dam.replica.persistence.repository.*;
@@ -47,6 +48,9 @@ public class StudentServiceImpl implements StudentService {
     private StudentMapper studentMapper;
 
     @Autowired
+    private TeacherMapper teacherMapper;
+
+    @Autowired
     CustomPagedResourceAssembler<StudentRest> customPagedResourceAssembler;
 
     @Override
@@ -69,6 +73,16 @@ public class StudentServiceImpl implements StudentService {
         Page<StudentRest> studentRestPage = studentPage.map(studentMapper::studentEntityToStudentRest);
         return  customPagedResourceAssembler.toModel(studentRestPage);
 
+    }
+
+    @Override
+    public CustomPagedResourceDTO<StudentRest> listStudentsByTeacher(Pageable pageable, String username) throws ReplicaException {
+        TeacherEntity teacherEntity= teacherRepository.findByUsername(username).orElseThrow( ()->new ReplicaNotFoundException(String.format("Teacher with Username: [%s] not found.", username), "404"));
+
+
+        Page<StudentEntity> studentPage = studentRepository.findByTeacher(teacherEntity, pageable);
+        Page<StudentRest> studentRestPage = studentPage.map(studentMapper::studentEntityToStudentRest);
+        return  customPagedResourceAssembler.toModel(studentRestPage);
     }
 
     @Override

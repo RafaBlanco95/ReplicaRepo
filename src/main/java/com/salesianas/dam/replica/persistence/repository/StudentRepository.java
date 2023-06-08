@@ -2,6 +2,7 @@ package com.salesianas.dam.replica.persistence.repository;
 
 
 import com.salesianas.dam.replica.persistence.entity.StudentEntity;
+import com.salesianas.dam.replica.persistence.entity.TeacherEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -15,4 +16,6 @@ public interface StudentRepository extends PagingAndSortingRepository<StudentEnt
     Page<StudentEntity> findAll(Pageable page);
 
     Optional<StudentEntity> findByUsername(String username);
+
+    Page<StudentEntity> findByTeacher(TeacherEntity teacher, Pageable page);
 }

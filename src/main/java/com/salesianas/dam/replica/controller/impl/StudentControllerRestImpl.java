@@ -169,4 +169,16 @@ public class StudentControllerRestImpl implements StudentControllerRest {
 
         return ResponseEntity.ok(response);
     }
+
+    @Override
+    @GetMapping(value= RestConstantsUtils.RESOURCE_TEACHERS+ RestConstantsUtils.RESOURCE_USERNAME,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ReplicaResponse<CustomPagedResourceDTO<StudentRest>>> listStudentsByTeacher(Pageable pageable, @PathVariable String username) throws ReplicaException {
+        ReplicaResponse response = ReplicaResponse.builder()
+                .status(ReplicaResponseStatus.OK)
+                .message("Students successfully recovered")
+                .data(studentService.listStudentsByTeacher(pageable, username))
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
 }
