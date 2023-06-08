@@ -19,6 +19,8 @@ public interface InternshipService {
 
     List<InternshipRest> listInternshipByStudentUsername(String username) throws ReplicaException;
 
+    CustomPagedResourceDTO<InternshipRest> listInternshipsByEmployee(Pageable pageable, String username) throws ReplicaException;
+
     InternshipRest modifyInternship(InternshipRest internshipRest, Long id) throws ReplicaException;
 
     void deleteInternship(Long id) throws ReplicaException;

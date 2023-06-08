@@ -14,4 +14,5 @@ public interface EmployeeRepository extends PagingAndSortingRepository<EmployeeE
     Page<EmployeeEntity> findAll(Pageable page);
 
     Optional<EmployeeEntity> findByUsername(String username);
+
 }

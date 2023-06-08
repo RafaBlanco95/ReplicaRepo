@@ -6,9 +6,11 @@ import com.salesianas.dam.replica.exception.ReplicaNotFoundException;
 import com.salesianas.dam.replica.mapper.FinalProjectMapper;
 import com.salesianas.dam.replica.mapper.InternshipMapper;
 import com.salesianas.dam.replica.mapper.WorkdayMapper;
+import com.salesianas.dam.replica.persistence.entity.EmployeeEntity;
 import com.salesianas.dam.replica.persistence.entity.FinalProjectEntity;
 import com.salesianas.dam.replica.persistence.entity.InternshipEntity;
 import com.salesianas.dam.replica.persistence.entity.WorkdayEntity;
+import com.salesianas.dam.replica.persistence.repository.EmployeeRepository;
 import com.salesianas.dam.replica.persistence.repository.FinalProjectRepository;
 import com.salesianas.dam.replica.persistence.repository.InternshipRepository;
 import com.salesianas.dam.replica.persistence.repository.WorkdayRepository;
@@ -29,6 +31,9 @@ public class InternshipServiceImpl implements InternshipService {
 
     @Autowired
     private WorkdayRepository workdayRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     private InternshipMapper internshipMapper;
@@ -67,6 +72,14 @@ public class InternshipServiceImpl implements InternshipService {
     @Override
     public List<InternshipRest> listInternshipByStudentUsername(String username) throws ReplicaException {
         return internshipMapper.internshipEntityListToInternshipRestList(internshipRepository.findByStudentUsername(username));
+    }
+
+    @Override
+    public CustomPagedResourceDTO<InternshipRest> listInternshipsByEmployee(Pageable pageable, String username) throws ReplicaException {
+        EmployeeEntity employeeEntity= employeeRepository.findByUsername(username).orElseThrow(() -> new ReplicaNotFoundException(String.format("Employee with username: [%s] not found.", username), "404"));
+        Page<InternshipEntity> internshipPage = internshipRepository.findByEmployee(pageable, employeeEntity);
+        Page<InternshipRest> internshipRestPage = internshipPage.map(internshipMapper::internshipEntityToInternshipRest);
+        return  customPagedResourceAssembler.toModel(internshipRestPage);
     }
 
     @Override

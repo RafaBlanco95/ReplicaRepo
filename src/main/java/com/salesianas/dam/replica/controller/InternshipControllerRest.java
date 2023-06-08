@@ -28,6 +28,10 @@ public interface InternshipControllerRest {
             String username
     ) throws ReplicaException;
 
+    ResponseEntity<ReplicaResponse<List<InternshipRest>>> listInternshipsByEmployee(
+            String username, Pageable pageable
+    ) throws ReplicaException;
+
     ResponseEntity<ReplicaResponse<CustomPagedResourceDTO<WorkdayRest>>> listInternshipWorkdays(
             Long id,
             Pageable pageable

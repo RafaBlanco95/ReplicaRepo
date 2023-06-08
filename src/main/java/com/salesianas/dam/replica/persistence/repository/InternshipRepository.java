@@ -1,6 +1,7 @@
 package com.salesianas.dam.replica.persistence.repository;
 
 
+import com.salesianas.dam.replica.persistence.entity.EmployeeEntity;
 import com.salesianas.dam.replica.persistence.entity.InternshipEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,4 +16,6 @@ public interface InternshipRepository extends PagingAndSortingRepository<Interns
     Page<InternshipEntity> findAll(Pageable page);
 
     List<InternshipEntity> findByStudentUsername(String username);
+
+    Page<InternshipEntity> findByEmployee(Pageable page, EmployeeEntity employeeEntity);
 }

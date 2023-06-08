@@ -105,6 +105,18 @@ public class InternshipControllerRestImpl implements InternshipControllerRest {
     }
 
     @Override
+    @GetMapping(value = RestConstantsUtils.RESOURCE_EMPLOYEES + RestConstantsUtils.RESOURCE_USERNAMES+ RestConstantsUtils.RESOURCE_USERNAME, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ReplicaResponse<List<InternshipRest>>> listInternshipsByEmployee(@PathVariable String username, Pageable pageable) throws ReplicaException {
+        ReplicaResponse response = ReplicaResponse.builder()
+                .status(ReplicaResponseStatus.OK)
+                .message("Internships successfully recovered")
+                .data(internshipService.listInternshipsByEmployee(pageable, username))
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
     @GetMapping(value = RestConstantsUtils.RESOURCE_ID + RestConstantsUtils.RESOURCE_WORKDAYS)
     public ResponseEntity<ReplicaResponse<CustomPagedResourceDTO<WorkdayRest>>> listInternshipWorkdays(@PathVariable Long id, Pageable pageable) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
