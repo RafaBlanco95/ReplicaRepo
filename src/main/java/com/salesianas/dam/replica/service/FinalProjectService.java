@@ -11,6 +11,8 @@ public interface FinalProjectService {
 
     FinalProjectRest getFinalProject(Long id) throws ReplicaException;
 
+    FinalProjectRest getFinalProjectByStudentUsername(String username) throws ReplicaException;
+
     CustomPagedResourceDTO<FinalProjectRest> listFinalProject(Pageable pageable) throws ReplicaException;
 
     CustomPagedResourceDTO<MeetingRest> listFinalProjectMeetings(Long id, Pageable pageable) throws ReplicaException;

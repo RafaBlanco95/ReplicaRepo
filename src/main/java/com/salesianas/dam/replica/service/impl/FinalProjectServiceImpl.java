@@ -46,6 +46,13 @@ public class FinalProjectServiceImpl implements FinalProjectService {
     }
 
     @Override
+    public FinalProjectRest getFinalProjectByStudentUsername(String username) throws ReplicaException {
+        return finalProjectRepository.findByStudentUsername(username)
+                .map(finalProject -> finalProjectMapper.finalProjectEntityToFinalProjectRest(finalProject)).orElseThrow( ()->new ReplicaNotFoundException(String.format("FinalProject with Student Username: [%s] not found.", username), "404"));
+
+    }
+
+    @Override
     public CustomPagedResourceDTO<FinalProjectRest> listFinalProject(Pageable pageable) throws ReplicaException {
         Page<FinalProjectEntity> finalProjectPage = finalProjectRepository.findAll(pageable);
         Page<FinalProjectRest> finalProjectRestPage = finalProjectPage.map(finalProjectMapper::finalProjectEntityToFinalProjectRest);

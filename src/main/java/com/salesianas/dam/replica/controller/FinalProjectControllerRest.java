@@ -10,6 +10,8 @@ public interface FinalProjectControllerRest {
 
     ResponseEntity<ReplicaResponse<FinalProjectRest>> finalProjectDetails(Long id) throws ReplicaException;
 
+    ResponseEntity<ReplicaResponse<FinalProjectRest>> finalProjectDetailsByStudentUsername(String username) throws ReplicaException;
+
     ResponseEntity<ReplicaResponse<FinalProjectRest>>  modifyFinalProject(FinalProjectRest finalProject, Long id) throws ReplicaException;
 
     ResponseEntity deleteFinalProject(Long id) throws ReplicaException;

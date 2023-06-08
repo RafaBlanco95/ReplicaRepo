@@ -41,6 +41,18 @@ public class FinalProjectControllerRestImpl implements FinalProjectControllerRes
     }
 
     @Override
+    @GetMapping(value = RestConstantsUtils.RESOURCE_USERNAMES+ RestConstantsUtils.RESOURCE_USERNAME, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ReplicaResponse<FinalProjectRest>> finalProjectDetailsByStudentUsername(@PathVariable String username) throws ReplicaException {
+        ReplicaResponse response = ReplicaResponse.builder()
+                .status(ReplicaResponseStatus.OK)
+                .message("FinalProject successfully recovered")
+                .data(finalProjectService.getFinalProjectByStudentUsername(username))
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
     @PutMapping(value = RestConstantsUtils.RESOURCE_ID, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ReplicaResponse<FinalProjectRest>> modifyFinalProject(@RequestBody FinalProjectRest finalProject, @PathVariable Long id) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
