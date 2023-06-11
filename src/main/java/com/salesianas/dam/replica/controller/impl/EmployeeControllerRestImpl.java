@@ -107,7 +107,6 @@ public class EmployeeControllerRestImpl implements EmployeeControllerRest {
 
     @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ReplicaResponse<CustomPagedResourceDTO<EmployeeRest>>> listEmployees(@Parameter(hidden=true)Pageable pageable) throws ReplicaException {
 
             ReplicaResponse response = ReplicaResponse.builder()

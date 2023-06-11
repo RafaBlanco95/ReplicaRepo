@@ -159,7 +159,6 @@ public class StudentControllerRestImpl implements StudentControllerRest {
 
     @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ReplicaResponse<CustomPagedResourceDTO<StudentRest>>> listStudents(@Parameter(hidden=true)Pageable pageable) throws ReplicaException {
         ReplicaResponse response = ReplicaResponse.builder()
                 .status(ReplicaResponseStatus.OK)
