@@ -164,7 +164,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void deleteStudent(Long id) throws ReplicaException {
         StudentEntity studentEntity= studentRepository.findById(id).orElseThrow( ()->new ReplicaNotFoundException(String.format("Student with ID: [%s] not found.", id), "404"));
-        studentRepository.delete(studentEntity);
+        studentRepository.deleteById(id);
     }
 
     @Override
