@@ -25,6 +25,9 @@ public class EmployeeEntity {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "center")
+    private String center;
+
     @JsonIgnore
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<InternshipEntity> internships;

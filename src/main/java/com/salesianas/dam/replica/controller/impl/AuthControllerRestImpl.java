@@ -147,7 +147,7 @@ public class AuthControllerRestImpl implements AuthControllerRest{
                 employeeRest.setName(signUpRequest.getName());
                 employeeRest.setLastName(signUpRequest.getLastName());
                 employeeRest.setUsername(user.getUsername());
-
+                employeeRest.setCenter(signUpRequest.getCenter());
                 employeeService.createEmployee(employeeRest);
             }
             return ResponseEntity.ok(new MessageResponse(RestConstantsUtils.USER_REGISTER_SUCCESS));

@@ -30,6 +30,9 @@ public class EmployeeRest implements Serializable {
     @JsonProperty("lastName")
     private String lastName;
 
+    @JsonProperty("center")
+    private String center;
+
     @JsonProperty("internships")
     private List<InternshipEntity> internships;
 
