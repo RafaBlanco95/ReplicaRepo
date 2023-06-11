@@ -164,6 +164,13 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void deleteStudent(Long id) throws ReplicaException {
         StudentEntity studentEntity= studentRepository.findById(id).orElseThrow( ()->new ReplicaNotFoundException(String.format("Student with ID: [%s] not found.", id), "404"));
+        studentEntity.getInternships().stream().map(internshipEntity -> {
+            internshipEntity.setStudent(null);
+            return internshipRepository.save(internshipEntity);
+        }).toList();
+        FinalProjectEntity finalProject=studentEntity.getFinalProject();
+        finalProject.setStudent(null);
+        finalProjectRepository.save(finalProject);
         studentRepository.deleteById(id);
     }
 
