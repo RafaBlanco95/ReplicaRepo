@@ -28,7 +28,7 @@ public class StudentEntity {
     private String lastName;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private UserEntity login_user;
 
 
