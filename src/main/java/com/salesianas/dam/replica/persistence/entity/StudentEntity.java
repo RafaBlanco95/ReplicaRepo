@@ -39,7 +39,7 @@ public class StudentEntity {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<InternshipEntity> internships;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name = "finalProject" )
     private FinalProjectEntity finalProject;
 }
