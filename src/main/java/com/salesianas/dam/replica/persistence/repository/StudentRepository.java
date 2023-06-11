@@ -21,4 +21,7 @@ public interface StudentRepository extends PagingAndSortingRepository<StudentEnt
 
     Page<StudentEntity> findByTeacher(TeacherEntity teacher, Pageable page);
 
+    @Override
+    @Query(value="DELETE FROM public.student WHERE id = :id", nativeQuery = true)
+    void deleteById(@Param("id") Long id);
 }
