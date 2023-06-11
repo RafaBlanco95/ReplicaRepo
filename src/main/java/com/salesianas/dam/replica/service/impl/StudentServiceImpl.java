@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -162,6 +163,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional 
     public void deleteStudent(Long id) throws ReplicaException {
         StudentEntity studentEntity= studentRepository.findById(id).orElseThrow( ()->new ReplicaNotFoundException(String.format("Student with ID: [%s] not found.", id), "404"));
         studentEntity.getInternships().stream().map(internshipEntity -> {
